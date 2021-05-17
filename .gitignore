@@ -1,0 +1,8 @@
+# Binaries and compiled classes
+*.dll
+*.a
+target
+
+# VS Code specific stuff
+.vscode
+.settings
