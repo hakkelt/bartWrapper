@@ -1,7 +1,9 @@
 # Binaries and compiled classes
-*.dll
-*.a
+src/main/resources
 target
+
+# logs
+*.log
 
 # VS Code specific stuff
 .vscode

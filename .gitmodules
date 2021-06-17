@@ -1,0 +1,3 @@
+[submodule "src/native/bart"]
+	path = src/native/bart
+	url = https://github.com/hakkelt/bart.git

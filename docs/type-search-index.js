@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.mediso.mri.utils","l":"BartConnector"},{"p":"com.mediso.mri.utils","l":"BartException"}]
