@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
   
     <groupId>io.github.hakkelt</groupId>
-    <artifactId>bartConnector</artifactId>
+    <artifactId>bartwrapper</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -45,6 +45,7 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>*.lib</exclude>
+                    <exclude>*.a</exclude>
                 </excludes>
                 <filtering>false</filtering>
             </resource>
@@ -70,7 +71,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>io.github.hakkelt.bartconnector.BartConnector</mainClass>
+                            <mainClass>io.github.hakkelt.bartwrapper.Bart</mainClass>
                             <classpathPrefix>main/java/</classpathPrefix>
                         </manifest>
                     </archive>

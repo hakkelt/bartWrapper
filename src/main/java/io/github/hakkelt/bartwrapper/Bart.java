@@ -1,4 +1,4 @@
-package io.github.hakkelt.bartconnector;
+package io.github.hakkelt.bartwrapper;
 
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
@@ -27,7 +27,7 @@ import java.nio.ByteOrder;
 /**
  * Driver for BART
  */
-public class BartConnector {
+public class Bart {
     static Set<String> alreadyUsedNames = new HashSet<>();
     private Random random = new Random();
     private boolean successFlag = false; // NOSONAR
@@ -40,15 +40,15 @@ public class BartConnector {
     private native void nativeRun(String ... args);
     private native String nativeRead(String ... args);
     private native void nativeRegisterMemory(String name, int[] dims, FloatBuffer buffer);
-    private native boolean nativeIsNameRegistered(String name);
+    private native boolean nativeIsMemoryAssociated(String name);
     private native void nativeRegisterOutput(String name);
     private native ByteBuffer nativeLoadMemory(String name, int[] dims);
     private native void nativeUnregisterMemory(String name);
 
-    private static BartConnector singleInstance = null;
+    private static Bart singleInstance = null;
 
-    private BartConnector() throws IOException {
-        final Logger logger = Logger.getLogger(BartConnector.class.getName());
+    private Bart() throws IOException {
+        final Logger logger = Logger.getLogger(Bart.class.getName());
 
         if (!this.getClass().getResource("").getProtocol().equals("jar")) {
             // During development...
@@ -80,9 +80,9 @@ public class BartConnector {
      * @return singleton instance of BART driver
      * @throws IOException when an error occurs during copying the dll to the temp directory
      */
-    public static BartConnector getInstance() throws IOException {
+    public static Bart getInstance() throws IOException {
         if (singleInstance == null)
-            singleInstance = new BartConnector();
+            singleInstance = new Bart();
         return singleInstance;
     }
 
@@ -99,7 +99,7 @@ public class BartConnector {
      * 
      * <blockquote><pre>{@code 
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 bart.registerMemory("input.mem", array);
 bart.registerOutput("output.mem");
 bart.execute("cabs", "input.mem", "output.mem");
@@ -134,11 +134,11 @@ assertEquals(array.abs(), result.squeeze().real());
      * @return true if the name is already registered for an input or an output.
      * @throws BartException when JNI call fails for any reason
      */
-    public boolean isNameRegistered(String name) throws BartException {
+    public boolean isMemoryAssociated(String name) throws BartException {
         if (!name.endsWith(".mem"))
             throw new IllegalArgumentException(ERROR_NAME_EXTENSION_IS_NOT_MEM);
         boolean[] ret = new boolean[1];
-        wrapJNIcall(() -> ret[0] = nativeIsNameRegistered(name));
+        wrapJNIcall(() -> ret[0] = nativeIsMemoryAssociated(name));
         return ret[0];
     }
 
@@ -150,7 +150,7 @@ assertEquals(array.abs(), result.squeeze().real());
      * 
      * <blockquote><pre>{@code 
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 bart.registerMemory("input.mem", array);
 bart.registerOutput("output.mem");
 bart.execute("cabs", "input.mem", "output.mem");
@@ -174,7 +174,7 @@ assertEquals(array.abs(), result.squeeze().real());
      * 
      * <blockquote><pre>{@code 
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 bart.registerMemory("input.mem", array);
 bart.registerOutput("output.mem");
 bart.execute("cabs", "input.mem", "output.mem");
@@ -206,7 +206,7 @@ bart.unregisterMemory("output.mem");
      * 
      * <blockquote><pre>{@code
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 bart.registerMemory("input.mem", array);
 bart.registerOutput("output.mem");
 bart.execute("cabs", "input.mem", "output.mem");
@@ -232,7 +232,7 @@ bart.unregisterMemory("output.mem");
      * 
      * <blockquote><pre>{@code 
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 bart.registerMemory("input.mem", array);
 bart.registerOutput("output.mem");
 bart.execute("cabs", "input.mem", "output.mem");
@@ -258,7 +258,7 @@ bart.unregisterMemory("output.mem");
      * <ul><li><b>Example:</b></li></ul>
      * 
      * <blockquote><pre>{@code 
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 String result = bart.read("bitmask", "-b", 7);
      * }</pre></blockquote>
      * 
@@ -289,7 +289,7 @@ String result = bart.read("bitmask", "-b", 7);
      * 
      * <blockquote><pre>{@code 
 NDArray<Complex> array = new ComplexF32NDArray(128, 128).fill(new Complex(1,-1));
-BartConnector bart = BartConnector.getInstance();
+Bart bart = Bart.getInstance();
 NDArray<Complex> bartAbs = bart.run("cabs", array).squeeze();
      * }</pre></blockquote>
      * 
@@ -316,7 +316,7 @@ NDArray<Complex> bartAbs = bart.run("cabs", array).squeeze();
         File dllPath = new File(System.getenv("TMP") + File.separator + "bart.dll");
         dllPath.deleteOnExit();
 
-        Files.copy(BartConnector.class.getResourceAsStream("/bart.dll"),
+        Files.copy(Bart.class.getResourceAsStream("/bart.dll"),
             dllPath.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         System.load(dllPath.getAbsolutePath());

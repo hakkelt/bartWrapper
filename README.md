@@ -1,6 +1,6 @@
 # Java Interface for BART
 
-[![Documentation](https://img.shields.io/badge/Documentation-latest-blue)](https://hakkelt.github.io/bartConnector/)
+[![Documentation](https://img.shields.io/badge/Documentation-latest-blue)](https://hakkelt.github.io/bartWrapper/)
 
 The aim of the code inside this directory is to provide an easy way to call BART commands natively from Java.
 
@@ -20,13 +20,13 @@ array.slice(2,":").fill(new Complex(0,1)); // fill the third row of the array wi
 ### High-level approach
 
 ```java
-bart = BartConnector.getInstance();
+bart = Bart.getInstance();
 
 // Use "read" for functions that return string
 String dimensions = bart.read("bitmask", "-b", 7); // "0 1 2"
 
 // Use "execute" if no return value is expected
-bart.execute("copy", array, "array.ra"); // writes array to disk
+bart.execute("copy", array, "array.ra"); // saves array to a file
 
 // Use "run" if an array is returned. Also, BartDimsEnum helps to handle dimensions more easily.
 BartDimsEnum[] dimsOrder = new BartDimsEnum[]{
@@ -53,7 +53,7 @@ try {
 Illustrates what "run" does behind the scenes: registers input arrays, registers the name of output, executes the commands, fetches the result, and cleans up BART memory space.
 
 ```java
-bart = BartConnector.getInstance();
+bart = Bart.getInstance();
 
 bart.registerMemory("input.mem", array); // tell BART to read values from array when "input.mem" is passed as an input argument
 bart.registerOutput("output.mem");       // tell BART that "output.mem" is going to store output values

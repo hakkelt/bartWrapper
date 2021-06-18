@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"io.github.hakkelt.bartconnector","l":"BartConnector"},{"p":"io.github.hakkelt.bartconnector","l":"BartException"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"io.github.hakkelt.bartwrapper","l":"Bart"},{"p":"io.github.hakkelt.bartwrapper","l":"BartException"}]

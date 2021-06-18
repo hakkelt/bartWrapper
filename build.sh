@@ -3,6 +3,11 @@
 # Uncomment the following line for debugging
 #DEBUG=1
 
+if [[ -z "${JAVA_HOME}" ]]; then
+    echo "You must set the JAVA_HOME environmental variable"
+    exit 1
+fi
+
 OS=$(uname -a | rev | cut -d" " -f1 | rev)
 
 if [[ "$OS" == "Msys" ]]; then
@@ -39,11 +44,6 @@ ar -M < bart.mri
 rm bart.mri
 mv bart.a src/main/resources/bart.$STATIC_LIB_EXT
 
-if [[ -z "${JAVA_HOME}" ]]; then
-    echo "You must set the JAVA_HOME environmental variable"
-    exit 1
-fi
-
 if [ -z $DEBUG ]; then
     DEBUG_SPECIFIC="-O3"
 else
@@ -54,5 +54,5 @@ gcc -shared $DEBUG_SPECIFIC -ffast-math -Wmissing-prototypes -std=gnu11 -fopenmp
     -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/$JNI_DIR" -I"src/native/bart/src" \
     -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -Wl,--allow-multiple-definition \
     -o src/main/resources/$OUTPUT \
-    src/native/BartConnector.c src/main/resources/bart.$STATIC_LIB_EXT \
+    src/native/Bart.c src/main/resources/bart.$STATIC_LIB_EXT \
     $OS_DEPENDENT_FLAGS -L/usr/lib -lfftw3f -lgfortran -lquadmath -lpng -lm -lz -lrt

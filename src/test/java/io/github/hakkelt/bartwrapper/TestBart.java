@@ -1,4 +1,4 @@
-package io.github.hakkelt.bartconnector;
+package io.github.hakkelt.bartwrapper;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -20,13 +20,13 @@ import io.github.hakkelt.ndarrays.ComplexF32NDArray;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.NDArrayCollectors;
 
-class TestBartConnector {
-    static BartConnector bart;
+class TestBart {
+    static Bart bart;
     static NDArray<Complex> array;
 
     @BeforeAll
     static void setup() throws IOException {
-        bart = BartConnector.getInstance();
+        bart = Bart.getInstance();
         array = new ComplexF32NDArray(3, 128);
         NDArray<Float> increasingNumbers = IntStream.range(-64, 64).boxed().collect(NDArrayCollectors.toRealF32NDArray(128));
         array.slice(0,":").set(increasingNumbers);
@@ -36,7 +36,7 @@ class TestBartConnector {
 
     @Test
     void testDoNothing() {
-        
+
     }
     
     @Test
@@ -52,7 +52,7 @@ class TestBartConnector {
     @Test
     void testReadError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> bart.read("cabs", "asdf"));
-        assertEquals(BartConnector.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(Bart.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
     }
     
     @Test
@@ -68,7 +68,7 @@ class TestBartConnector {
     @Test
     void testExecuteError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> bart.execute("cabs", "asdf"));
-        assertEquals(BartConnector.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(Bart.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
     }
 
     @Test
@@ -81,7 +81,7 @@ class TestBartConnector {
     @Test
     void testRunError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> bart.run("cabs", "asdf"));
-        assertEquals(BartConnector.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(Bart.ERROR_BART_UNSUCCESSFUL, exception.getMessage());
     }
 
     @Test
@@ -104,10 +104,10 @@ class TestBartConnector {
     void testRegisterLoadUnregister() throws BartException {
         assertDoesNotThrow(() -> bart.registerMemory("input.mem", array));
         assertDoesNotThrow(() -> bart.registerOutput("output.mem"));
-        assertFalse(bart.isNameRegistered("output.mem"));
+        assertFalse(bart.isMemoryAssociated("output.mem"));
         assertDoesNotThrow(() -> bart.execute("cabs", "input.mem", "output.mem"));
-        assertTrue(bart.isNameRegistered("input.mem"));
-        assertTrue(bart.isNameRegistered("output.mem"));
+        assertTrue(bart.isMemoryAssociated("input.mem"));
+        assertTrue(bart.isMemoryAssociated("output.mem"));
         List<NDArray<Complex>> result = new ArrayList<NDArray<Complex>>();
         assertDoesNotThrow(() -> result.add(bart.loadMemory("output.mem")));
         assertDoesNotThrow(() -> bart.unregisterMemory("input.mem"));

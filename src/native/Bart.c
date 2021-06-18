@@ -2,17 +2,19 @@
 #include <stdio.h>      // C Standard IO Header
 #include <string.h>
 #include <malloc.h>
-#include <stdbool.h>
-#include "io_github_hakkelt_bartconnector_BartConnector.h"   // Generated
+#include "io_github_hakkelt_bartwrapper_Bart.h"   // Generated
 
-//#include "main.h"
-//#include "misc/misc.h"
-//#include "misc/memcfl.h"
-//#include "misc/mri.h"
-//#include "misc/mmio.h"
-//#include "misc/io.h"
+#include "main.h"
+#include "misc/misc.h"
+#include "misc/memcfl.h"
+#include "misc/mri.h"
+#include "misc/mmio.h"
+#include "misc/io.h"
 
 #define BUFFER_SIZE 4096
+#define concat2(X, Y) X ## Y
+#define concat(X, Y) concat2(X, Y)
+#define jni_func(x) concat(Java_io_github_hakkelt_bartwrapper_Bart_, x)
 
 static void run_bart_commands(char* output, JNIEnv *env, jobject thisObj, jobjectArray args)
 {
@@ -30,22 +32,20 @@ static void run_bart_commands(char* output, JNIEnv *env, jobject thisObj, jobjec
     }
     commands[dataLength] = NULL;
 
-    //int ret = bart_command(output == NULL ? 0 : BUFFER_SIZE, output, dataLength, commands);
-    //for (jsize i = 0; i < dataLength; i++) {
-    //    jstring string = (jstring) ((*env)->GetObjectArrayElement(env, args, i));
-    //    (*env)->ReleaseStringUTFChars(env, string, commands[i]);
-    //}
+    int ret = bart_command(output == NULL ? 0 : BUFFER_SIZE, output, dataLength, commands);
+    for (jsize i = 0; i < dataLength; i++)
+        free(commands[i]);
 
-    //if (ret == 0)
+    if (ret == 0)
         (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
 }
 
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeRun(JNIEnv *env, jobject thisObj, jobjectArray args)
+JNIEXPORT void JNICALL jni_func(nativeRun)(JNIEnv *env, jobject thisObj, jobjectArray args)
 {
     run_bart_commands(NULL, env, thisObj, args);
 }
 
-JNIEXPORT jstring JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeRead(JNIEnv *env, jobject thisObj, jobjectArray args)
+JNIEXPORT jstring JNICALL jni_func(nativeRead)(JNIEnv *env, jobject thisObj, jobjectArray args)
 {
     char* output = (char*)malloc(BUFFER_SIZE);
     run_bart_commands(output, env, thisObj, args);
@@ -54,7 +54,7 @@ JNIEXPORT jstring JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nat
     return ret;
 }
 
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeRegisterMemory(JNIEnv *env, jobject thisObj, jstring java_name, jintArray java_dims, jobject java_buffer)
+JNIEXPORT void JNICALL jni_func(nativeRegisterMemory)(JNIEnv *env, jobject thisObj, jstring java_name, jintArray java_dims, jobject java_buffer)
 {
     const char *name = (*env)->GetStringUTFChars(env, java_name, NULL);
     if (NULL == name) return;
@@ -63,26 +63,33 @@ JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_native
     if (NULL == dims) return;
     jsize D = (*env)->GetArrayLength(env, java_dims);
 
-    //float complex* data = (float complex*)(*env)->GetDirectBufferAddress(env, java_buffer);
-    //if (NULL == data) return;
+    float complex* data = (float complex*)(*env)->GetDirectBufferAddress(env, java_buffer);
+    if (NULL == data) return;
 
     jclass thisClass = (*env)->GetObjectClass(env, thisObj);
     jfieldID fidSuccessFlag = (*env)->GetFieldID(env, thisClass, "successFlag", "Z");
     if (NULL == fidSuccessFlag) return;
 
-    //if (memcfl_exists(name))
-    //    memcfl_unlink(name);
+    if (memcfl_exists(name))
+        memcfl_unlink(name);
 
-    //io_reserve_input(name);
-    //memcfl_register(name, D, dims, data, false);
-    //memcfl_unmap(data);
+    io_reserve_input(name);
+    #ifdef _WIN32
+        memcfl_register(name, D, dims, data, false);
+    #else
+        long longDims[D];
+        for (jsize i = 0; i < D; i++)
+            longDims[i] = dims[i];
+        memcfl_register(name, D, longDims, data, false);
+    #endif
+    memcfl_unmap(data);
     
     (*env)->ReleaseIntArrayElements(env, java_dims, dims, 0);
     (*env)->ReleaseStringUTFChars(env, java_name, name);
     (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
 }
 
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeRegisterOutput(JNIEnv *env, jobject thisObj, jstring java_name)
+JNIEXPORT void JNICALL jni_func(nativeRegisterOutput)(JNIEnv *env, jobject thisObj, jstring java_name)
 {
     const char *name = (*env)->GetStringUTFChars(env, java_name, NULL);
     if (NULL == name) return;
@@ -97,7 +104,7 @@ JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_native
     (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
 }
 
-JNIEXPORT jboolean JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeIsNameRegistered(JNIEnv *env, jobject thisObj, jstring java_name)
+JNIEXPORT jboolean JNICALL jni_func(nativeIsMemoryAssociated)(JNIEnv *env, jobject thisObj, jstring java_name)
 {
     const char *name = (*env)->GetStringUTFChars(env, java_name, NULL);
     if (NULL == name) return false;
@@ -106,7 +113,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_na
     jfieldID fidSuccessFlag = (*env)->GetFieldID(env, thisClass, "successFlag", "Z");
     if (NULL == fidSuccessFlag) return false;
 
-    bool ret = true; // memcfl_exists(name);
+    bool ret = memcfl_exists(name);
     
     (*env)->ReleaseStringUTFChars(env, java_name, name);
     (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
@@ -114,7 +121,7 @@ JNIEXPORT jboolean JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_na
     return ret;
 }
 
-JNIEXPORT jobject JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeLoadMemory(JNIEnv *env, jobject thisObj, jstring java_name, jintArray java_dims)
+JNIEXPORT jobject JNICALL jni_func(nativeLoadMemory)(JNIEnv *env, jobject thisObj, jstring java_name, jintArray java_dims)
 {
     const char *name = (*env)->GetStringUTFChars(env, java_name, NULL);
     if (NULL == name) return NULL;
@@ -127,22 +134,30 @@ JNIEXPORT jobject JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nat
     jfieldID fidSuccessFlag = (*env)->GetFieldID(env, thisClass, "successFlag", "Z");
     if (NULL == fidSuccessFlag) return NULL;
 
-    //io_reserve_input(name);
-    //void* data = (void*)load_cfl(name, D, dims);
-    //jlong size = io_calc_size(D, dims, sizeof(complex float));
+    io_reserve_input(name);
+    #ifdef _WIN32
+        void* data = (void*)load_cfl(name, D, dims);
+        jint size = io_calc_size(D, dims, sizeof(complex float));
+    #else
+        long longDims[D];
+        for (jsize i = 0; i < D; i++)
+            longDims[i] = dims[i];
+        void* data = (void*)load_cfl(name, D, longDims);
+        jint size = io_calc_size(D, longDims, sizeof(complex float));
+    #endif
 
-    //jobject buffer = (*env)->NewDirectByteBuffer(env, data, size);
+    jobject buffer = (*env)->NewDirectByteBuffer(env, data, size);
 
-    //memcfl_unmap(data);
+    memcfl_unmap(data);
 
     (*env)->ReleaseIntArrayElements(env, java_dims, dims, 0);
     (*env)->ReleaseStringUTFChars(env, java_name, name);
     (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
 
-    return NULL; // buffer;
+    return buffer;
 }
 
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_nativeUnregisterMemory(JNIEnv *env, jobject thisObj, jstring java_name)
+JNIEXPORT void JNICALL jni_func(nativeUnregisterMemory)(JNIEnv *env, jobject thisObj, jstring java_name)
 {
     const char *name = (*env)->GetStringUTFChars(env, java_name, NULL);
     if (NULL == name) return;
@@ -151,7 +166,7 @@ JNIEXPORT void JNICALL Java_io_github_hakkelt_bartconnector_BartConnector_native
     jfieldID fidSuccessFlag = (*env)->GetFieldID(env, thisClass, "successFlag", "Z");
     if (NULL == fidSuccessFlag) return;
 
-    //memcfl_unlink(name);
+    memcfl_unlink(name);
     
     (*env)->ReleaseStringUTFChars(env, java_name, name);
     (*env)->SetBooleanField(env, thisObj, fidSuccessFlag, JNI_TRUE);
