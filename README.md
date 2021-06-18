@@ -80,12 +80,12 @@ bart.unregisterMemory("output.mem");
 
 ### Prepare MSYS2 environment for Windows
 MSYS2 is needed to emulate the Linux environment on Windows in order to ease the process of building.
-Commands in the "step" section should be executed within the MSYS2 shell after setting it up:
+Commands in the "OS-independent Steps" section below should be executed within the MSYS2 shell after setting it up:
 
 - Install MSYS2 (see: https://www.msys2.org/)
 - Install MSYS2 packages required by BART: `src/native/bart/msys_setup.sh`
 
-### Step
+### OS-independent Steps
 
 - BART submodule needs to be initialized and fetched: `git submodule update --init --recursive`
 - BART and the JNI driver needs to be compiled by running the following command also within MSYS2 terminal: `./build.sh`
