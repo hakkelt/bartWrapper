@@ -7,28 +7,26 @@ The aim of the code inside this directory is to provide an easy way to call BART
 ## Examples
 
 ### Initialize an NDArray
-Package NDArrays is a separate package, but it is developed specifically to help passing data to BART.
+Package NDArrays is a separate package that aims to provide a general framework to work with multidimensional (complex) arrays.
 
 ```java
-NDArray<Complex> array = new ComplexF32NDArray(3, 128); // 3 x 128 array initialized with complex zeros
-NDArray<Float> increasingNumbers = IntStream.range(-64, 64).boxed().collect(NDArrayCollectors.toRealF32NDArray(128)); // 1D array holding integer values from -64 to 64
-array.slice(0,":").set(increasingNumbers); // copy content of increasingNumbers to the first row of the array
-array.slice(1,":").set(increasingNumbers); // copy content of increasingNumbers to the second row of the array
-array.slice(2,":").fill(new Complex(0,1)); // fill the third row of the array with 0 + 1i
+ComplexNDArray<Float> array = new BartFloatNDArray(3, 128); // BartFloatNDArray is an implementation of the ComplexNDArray interface
+NDArray<Float> increasingNumbers = IntStream.range(-64, 64).boxed().collect(BasicFloatNDArray.getCollector(128)); // 1D array holding integer values from -64 to 64
+array.slice(0,":").copyFrom(increasingNumbers); // copy content of increasingNumbers to the first row of the array
+array.slice(1,":").copyFrom(increasingNumbers); // copy content of increasingNumbers to the second row of the array
+array.slice(2,":").fill(0); // fill the third row of the array with 0 + 1i
 ```
 
 ### High-level approach
 
 ```java
-bart = Bart.getInstance();
-
 // Use "read" for functions that return string
-String dimensions = bart.read("bitmask", "-b", 7); // "0 1 2"
+String dimensions = Bart.read("bitmask", "-b", 7); // "0 1 2"
 
 // Use "execute" if no return value is expected
-bart.execute("copy", array, "array.ra"); // saves array to a file
+Bart.execute("copy", array, "array.ra"); // saves array to a file
 
-// Use "run" if an array is returned. Also, BartDimsEnum helps to handle dimensions more easily.
+// Use "run" if an array is returned. Also, BartDimsEnum helps to handle BART dimensions (see: https://github.com/mrirecon/bart/blob/master/README section 3.2) more easily.
 BartDimsEnum[] dimsOrder = new BartDimsEnum[]{
     BartDimsEnum._00_READ,
     BartDimsEnum._01_PHS1,
@@ -36,15 +34,15 @@ BartDimsEnum[] dimsOrder = new BartDimsEnum[]{
     BartDimsEnum._10_TIME
 };
 array.setBartDims(dimsOrder); // tell the wrapper that it should reshape the array and permute the dimensions before passing it to BART
-NDArray<Double> javaAbs = array.abs();
-NDArray<Complex> bartAbs = bart.run("cabs", array).squeeze().permuteDims(dimsOrder); // re-arrange the dimensions to the original order
+NDArray<Float> javaAbs = array.abs();
+ComplexNDArray<Float> bartAbs = Bart.run("cabs", array).squeeze().permuteDims(dimsOrder); // re-arrange the dimensions to the original order
 double diff = bartAbs.subtract(javaAbs).abs().sum() / array.length(); // Should be a small number, e.g. ~1e-7
 
 // BartException signals errors within BART execution
 try {
-    bart.read("cabs", "asdf")
+    Bart.read("cabs", "asdf")
 } catch (BartException e) {
-    // bart.read("cabs", "asdf") throws BartException because "asdf" file doesn't exists
+    // Bart.read("cabs", "asdf") throws BartException because "asdf" file doesn't exists
 }
 ```
 
@@ -53,22 +51,21 @@ try {
 Illustrates what "run" does behind the scenes: registers input arrays, registers the name of output, executes the commands, fetches the result, and cleans up BART memory space.
 
 ```java
-bart = Bart.getInstance();
 
-bart.registerMemory("input.mem", array); // tell BART to read values from array when "input.mem" is passed as an input argument
-bart.registerOutput("output.mem");       // tell BART that "output.mem" is going to store output values
+Bart.registerInput("input.mem", array); // tell BART to read values from array when "input.mem" is passed as an input argument
+Bart.registerOutput("output.mem");       // tell BART that "output.mem" is going to store output values
 
-Boolean inputRegistered = bart.isMemoryAssociated("input.mem"); // should be true
-Boolean outputRegistered = bart.isMemoryAssociated("output.mem"); // should be false because no memory is associated with this name yet
+Boolean inputRegistered = Bart.isMemoryFileRegistered("input.mem"); // should be true
+Boolean outputRegistered = Bart.isMemoryFileRegistered("output.mem"); // should be false because no memory is associated with this name yet
 
-bart.execute("cabs", "input.mem", "output.mem");
+Bart.execute("cabs", "input.mem", "output.mem");
 
-outputRegistered = bart.isMemoryAssociated("output.mem"); // this time should be true
-NDArray<Complex> result = bart.loadMemory("output.mem"); // fetch result data
+outputRegistered = Bart.isMemoryFileRegistered("output.mem"); // this time should be true
+ComplexNDArray<Float> result = Bart.loadMemory("output.mem"); // fetch result data
 
 // Clean up BART memory
-bart.unregisterMemory("input.mem");
-bart.unregisterMemory("output.mem");
+Bart.unregisterInput("input.mem");
+Bart.unregisterInput("output.mem");
 ```
 
 ## Dependencies

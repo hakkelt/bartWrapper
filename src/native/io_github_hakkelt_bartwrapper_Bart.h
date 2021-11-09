@@ -10,58 +10,58 @@ extern "C" {
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
  * Method:    nativeRun
- * Signature: ([Ljava/lang/String;)V
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;[Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeRun
-  (JNIEnv *, jobject, jobjectArray);
+  (JNIEnv *, jclass, jobject, jobjectArray);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
  * Method:    nativeRead
- * Signature: ([Ljava/lang/String;)Ljava/lang/String;
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;[Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeRead
-  (JNIEnv *, jobject, jobjectArray);
+  (JNIEnv *, jclass, jobject, jobjectArray);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
- * Method:    nativeRegisterMemory
- * Signature: (Ljava/lang/String;[ILjava/nio/FloatBuffer;)V
+ * Method:    nativeregisterInput
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;Ljava/lang/String;[ILjava/nio/FloatBuffer;)V
  */
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeRegisterMemory
-  (JNIEnv *, jobject, jstring, jintArray, jobject);
+JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeregisterInput
+  (JNIEnv *, jclass, jobject, jstring, jintArray, jobject);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
- * Method:    nativeIsMemoryAssociated
- * Signature: (Ljava/lang/String;)Z
+ * Method:    nativeIsMemoryFileRegistered
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;Ljava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeIsMemoryAssociated
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT jboolean JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeIsMemoryFileRegistered
+  (JNIEnv *, jclass, jobject, jstring);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
  * Method:    nativeRegisterOutput
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeRegisterOutput
-  (JNIEnv *, jobject, jstring);
+  (JNIEnv *, jclass, jobject, jstring);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
  * Method:    nativeLoadMemory
- * Signature: (Ljava/lang/String;[I)Ljava/nio/ByteBuffer;
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;Ljava/lang/String;[I)Ljava/nio/ByteBuffer;
  */
 JNIEXPORT jobject JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeLoadMemory
-  (JNIEnv *, jobject, jstring, jintArray);
+  (JNIEnv *, jclass, jobject, jstring, jintArray);
 
 /*
  * Class:     io_github_hakkelt_bartwrapper_Bart
- * Method:    nativeUnregisterMemory
- * Signature: (Ljava/lang/String;)V
+ * Method:    nativeUnregisterInput
+ * Signature: (Lio/github/hakkelt/bartwrapper/Bart/SuccessFlag;Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeUnregisterMemory
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL Java_io_github_hakkelt_bartwrapper_Bart_nativeUnregisterInput
+  (JNIEnv *, jclass, jobject, jstring);
 
 #ifdef __cplusplus
 }
