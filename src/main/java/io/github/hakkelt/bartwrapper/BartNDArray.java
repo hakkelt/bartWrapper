@@ -748,13 +748,13 @@ assertEquals(128, array2.shape(1));
      * 
      * @return Prepared BartNDArray ready to pass to JNI backend
      */
-    public default BartFloatNDArray prepareToPassToBackend() {
+    public default BartComplexFloatNDArray prepareToPassToBackend() {
         List<Integer> intBartDims = getBartDimsAsIntList();
         int[] permutator = getBartDimsPermutator(intBartDims);
         BartNDArray view = permuteDims(permutator);
         int[] newShape = getBartDimsShape(intBartDims, permutator);
         BartNDArray result = view.reshape(newShape);
-        return (BartFloatNDArray) (result instanceof BartFloatNDArray ? result : result.copy());
+        return (BartComplexFloatNDArray) (result instanceof BartComplexFloatNDArray ? result : result.copy());
     }
 
     private List<Integer> getBartDimsAsIntList() {

@@ -27,7 +27,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @BeforeEach
     void setup() {
-        array = new BartFloatNDArray(new int[]{ 4, 5, 3 });
+        array = new BartComplexFloatNDArray(new int[]{ 4, 5, 3 });
         array.fillUsingLinearIndices(index -> new Complex(index, -index));
         reshaped = array.reshape(20, 3);
     }
@@ -213,7 +213,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testEqual() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         assertEquals(reshaped, array2);
         array2.set(new Complex(0,0), 10);
         assertNotEquals(reshaped, array2);
@@ -238,7 +238,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testBartDimsNotEqual() {
-        BartFloatNDArray array2 = new BartFloatNDArray(reshaped);
+        BartComplexFloatNDArray array2 = new BartComplexFloatNDArray(reshaped);
         array2.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1);
         assertNotEquals(reshaped, array2);
     }
@@ -279,7 +279,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<?> increased = reshaped.stream()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(reshaped.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(reshaped.shape()));
         for (int i = 0; i < reshaped.length(); i++)
             assertEquals(reshaped.get(i).add(one), increased.get(i));
     }
@@ -289,7 +289,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<?> increased = reshaped.stream().parallel()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(reshaped.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(reshaped.shape()));
         for (int i = 0; i < reshaped.length(); i++)
             assertEquals(reshaped.get(i).add(one), increased.get(i));
     }
@@ -332,7 +332,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testApply() {
-        NDArray<Complex> reshaped2 = new BartFloatNDArray(array).reshape(20, 3).apply(value -> value.atan());
+        NDArray<Complex> reshaped2 = new BartComplexFloatNDArray(array).reshape(20, 3).apply(value -> value.atan());
         for (int i = 1; i < array.length(); i++) {
             assertTrue(Math.abs(reshaped.get(i).atan().getReal() - reshaped2.get(i).getReal()) / reshaped2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(reshaped.get(i).atan().getImaginary() - reshaped2.get(i).getImaginary()) / reshaped2.get(i).getImaginary() < 1e-6);
@@ -341,7 +341,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testApplyWithLinearIndices() {
-        NDArray<Complex> reshaped2 = new BartFloatNDArray(array).reshape(20, 3).applyWithLinearIndices((value, index) -> value.atan().add(index));
+        NDArray<Complex> reshaped2 = new BartComplexFloatNDArray(array).reshape(20, 3).applyWithLinearIndices((value, index) -> value.atan().add(index));
         for (int i = 1; i < reshaped.length(); i++) {
             assertTrue(Math.abs(reshaped.get(i).atan().add(i).getReal() - reshaped2.get(i).getReal()) / reshaped2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(reshaped.get(i).atan().add(i).getImaginary() - reshaped2.get(i).getImaginary()) / reshaped2.get(i).getImaginary() < 1e-6);
@@ -350,7 +350,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testApplyWithCartesianIndex() {
-        NDArray<Complex> reshaped2 = new BartFloatNDArray(array).reshape(20, 3).applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
+        NDArray<Complex> reshaped2 = new BartComplexFloatNDArray(array).reshape(20, 3).applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
         for (int i = 0; i < reshaped.shape(0); i++)
             for (int j = 0; j < reshaped.shape(1); j++) {
                 if (i == 0 && j == 0) continue;
@@ -406,7 +406,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAdd() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         BartNDArray array3 = reshaped.add(array2);
         for (int i = 0; i < reshaped.length(); i++)
             assertEquals(reshaped.get(i).multiply(2), array3.get(i));
@@ -421,7 +421,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAddMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         BartNDArray array3 = reshaped.add(array2, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < reshaped.length(); i++) {
             Complex expected = reshaped.get(i).multiply(3).add(new Complex(5.3 + 3,1));
@@ -431,7 +431,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAddInplace() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         array2.addInplace(reshaped);
         for (int i = 0; i < reshaped.length(); i++)
             assertEquals(reshaped.get(i).multiply(2), array2.get(i));
@@ -439,7 +439,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAddInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         array2.addInplace(5);
         for (int i = 0; i < reshaped.length(); i++)
             assertEquals(reshaped.get(i).add(5), array2.get(i));
@@ -447,7 +447,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAddInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(reshaped);
+        BartNDArray array2 = new BartComplexFloatNDArray(reshaped);
         array2.addInplace(reshaped, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < reshaped.length(); i++) {
             Complex expected = reshaped.get(i).multiply(3).add(new Complex(5.3 + 3,1));
@@ -630,7 +630,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testConcatenate() {
-        BartNDArray array2 = new BartFloatNDArray(new int[]{5, 3}).fill(1);
+        BartNDArray array2 = new BartComplexFloatNDArray(new int[]{5, 3}).fill(1);
         BartNDArray array3 = reshaped.concatenate(0, array2);
         for (int i = 0; i < reshaped.shape(0); i++)
             for (int j = 0; j < reshaped.shape(1); j++)
@@ -643,8 +643,8 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
     @Test
     void testConcatenateMultiple() {
         BartNDArray array2 = reshaped.copy().fill(1).slice("1:5", ":");
-        BartNDArray array3 = new BartFloatNDArray(new int[]{3, 2}).permuteDims(1, 0);
-        BartNDArray array4 = new BartFloatNDArray(new int[]{9}).fill(new Complex(2, -2)).reshape(3, 3);
+        BartNDArray array3 = new BartComplexFloatNDArray(new int[]{3, 2}).permuteDims(1, 0);
+        BartNDArray array4 = new BartComplexFloatNDArray(new int[]{9}).fill(new Complex(2, -2)).reshape(3, 3);
         BartNDArray array5 = reshaped.concatenate(0, array2, array3, array4);
         int start = 0;
         int end = reshaped.shape(0);
@@ -691,8 +691,8 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
 
     @Test
     void testAngle() {
-        NDArray<Float> angle = reshaped.angle();
+        NDArray<Float> argument = reshaped.argument();
         reshaped.streamLinearIndices()
-            .forEach(i -> assertTrue(reshaped.get(i).getArgument() - angle.get(i) < 1e-5));
+            .forEach(i -> assertTrue(reshaped.get(i).getArgument() - argument.get(i) < 1e-5));
     }
 }

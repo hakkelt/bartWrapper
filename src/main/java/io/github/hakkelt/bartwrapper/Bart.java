@@ -104,14 +104,14 @@ assertEquals(array.abs(), result.squeeze().real());
     public static void registerInput(String name, NDArray<?> array) throws BartException {
         if (!name.endsWith(".mem"))
             throw new IllegalArgumentException(BartErrors.NAME_EXTENSION_IS_NOT_MEM);
-        BartFloatNDArray arrayToPass;
+        BartComplexFloatNDArray arrayToPass;
         if (array instanceof BartNDArray) {
             if (((BartNDArray)array).areBartDimsSpecified())
                 arrayToPass = ((BartNDArray)array).prepareToPassToBackend();
             else
-                arrayToPass = (BartFloatNDArray)(array instanceof BartFloatNDArray ? array : ((BartNDArray)array).copy());
+                arrayToPass = (BartComplexFloatNDArray)(array instanceof BartComplexFloatNDArray ? array : ((BartNDArray)array).copy());
         } else {
-            arrayToPass = new BartFloatNDArray(array);
+            arrayToPass = new BartComplexFloatNDArray(array);
         }
         int[] bartDims = arrayToPass.shape();
         FloatBuffer buffer = arrayToPass.getFloatBuffer();
@@ -185,7 +185,7 @@ Bart.unregisterInput("output.mem");
         ByteBuffer[] buffer = new ByteBuffer[1];
         wrapJNIcall(successFlag-> buffer[0] = nativeLoadMemory(successFlag, name, dims));
         buffer[0].order(ByteOrder.LITTLE_ENDIAN);
-        BartNDArray array = new BartFloatNDArray(buffer[0], dims).copy();
+        BartNDArray array = new BartComplexFloatNDArray(buffer[0], dims).copy();
         array.setBartDims(BartDimsEnum.values());
         return array;
     }
@@ -336,7 +336,9 @@ BartNDArray bartAbs = Bart.run("cabs", array).squeeze();
         init();
         SuccessFlag successFlag = new SuccessFlag();
         try {
-            func.run(successFlag);
+            synchronized(Bart.class) {
+                func.run(successFlag);
+            }
         } catch (Exception e) {
             throw new BartException(BartErrors.BART_FATAL);
         }

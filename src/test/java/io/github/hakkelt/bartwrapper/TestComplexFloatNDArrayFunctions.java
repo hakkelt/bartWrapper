@@ -23,7 +23,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @BeforeEach
     void setup() {
-        array = new BartFloatNDArray(new int[]{ 4, 5, 3 });
+        array = new BartComplexFloatNDArray(new int[]{ 4, 5, 3 });
         array.fillUsingLinearIndices(index -> new Complex(index, -index));
     }
 
@@ -180,7 +180,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testEqual() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         assertEquals(array, array2);
         array2.set(new Complex(0,0), 10);
         assertNotEquals(array, array2);
@@ -213,20 +213,20 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
     @Test
     void testBartDimsNotEqual2() {
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array);
         assertEquals(array, array2);
     }
 
     @Test
     void testBartDimsNotEqual3() {
-        BartFloatNDArray array2 = new BartFloatNDArray(array);
+        BartComplexFloatNDArray array2 = new BartComplexFloatNDArray(array);
         array2.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
         assertNotEquals(array, array2);
     }
 
     @Test
     void testBartDimsNotEqual4() {
-        BartFloatNDArray array2 = new BartFloatNDArray(array);
+        BartComplexFloatNDArray array2 = new BartComplexFloatNDArray(array);
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._03_COIL, BartDimsEnum._04_MAPS);
         array2.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
         assertNotEquals(array, array2);
@@ -268,7 +268,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<Complex> increased = array.stream()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(array.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(array.shape()));
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).add(one), increased.get(i));
     }
@@ -278,7 +278,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<Complex> increased = array.stream().parallel()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(array.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(array.shape()));
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).add(one), increased.get(i));
     }
@@ -319,7 +319,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testApply() {
-        BartNDArray array2 = new BartFloatNDArray(array).apply(value -> value.atan());
+        BartNDArray array2 = new BartComplexFloatNDArray(array).apply(value -> value.atan());
         for (int i = 1; i < array.length(); i++) {
             assertTrue(Math.abs(array.get(i).atan().getReal() - array2.get(i).getReal()) / array2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(array.get(i).atan().getImaginary() - array2.get(i).getImaginary()) / array2.get(i).getImaginary() < 1e-6);
@@ -328,7 +328,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testApplyWithLinearIndices() {
-        BartNDArray array2 = new BartFloatNDArray(array).applyWithLinearIndices((value, index) -> value.atan().add(index));
+        BartNDArray array2 = new BartComplexFloatNDArray(array).applyWithLinearIndices((value, index) -> value.atan().add(index));
         for (int i = 1; i < array.length(); i++) {
             assertTrue(Math.abs(array.get(i).atan().add(i).getReal() - array2.get(i).getReal()) / array2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(array.get(i).atan().add(i).getImaginary() - array2.get(i).getImaginary()) / array2.get(i).getImaginary() < 1e-6);
@@ -337,7 +337,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testApplyWithCartesianIndex() {
-        BartNDArray array2 = new BartFloatNDArray(array).applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
+        BartNDArray array2 = new BartComplexFloatNDArray(array).applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
         for (int i = 0; i < array.shape(0); i++)
             for (int j = 0; j < array.shape(1); j++)
                 for (int k = 0; k < array.shape(2); k++) {
@@ -395,7 +395,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAdd() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.add(array2);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).multiply(2), array3.get(i));
@@ -410,7 +410,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAddMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.add(array2, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(3).add(new Complex(5.3 + 3,1));
@@ -420,7 +420,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAddInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.addInplace(array);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).multiply(2), array2.get(i));
@@ -428,7 +428,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAddInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.addInplace(5);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).add(5), array2.get(i));
@@ -436,7 +436,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAddInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.addInplace(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(3).add(new Complex(5.3 + 3,1));
@@ -446,7 +446,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testSubtract() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.subtract(array2);
         for (int i = 0; i < array.length(); i++)
             assertEquals(new Complex(0,0), array3.get(i));
@@ -461,7 +461,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testSubtractMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.subtract(array2, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(-1).subtract(new Complex(5.3 + 3,1));
@@ -471,7 +471,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testSubtractInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.subtractInplace(array);
         for (int i = 0; i < array.length(); i++)
             assertEquals(new Complex(0,0), array2.get(i));
@@ -479,7 +479,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testSubtractInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.subtractInplace(5);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).subtract(5), array2.get(i));
@@ -487,7 +487,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testSubtractInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.subtractInplace(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(-1).subtract(new Complex(5.3 + 3,1));
@@ -497,7 +497,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testMultiply() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.multiply(array2);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).multiply(array.get(i)), array3.get(i));
@@ -512,7 +512,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testMultiplyMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.multiply(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(array.get(i)).multiply((float)5.3)
@@ -523,7 +523,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testMultiplyInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.multiplyInplace(array);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).multiply(array.get(i)), array2.get(i));
@@ -531,7 +531,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testMultiplyInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.multiplyInplace(5);
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).multiply(5), array2.get(i));
@@ -539,7 +539,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testMultiplyInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.multiplyInplace(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).multiply(array.get(i)).multiply((float)5.3)
@@ -553,7 +553,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testDivide() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.divide(array2);
         for (int i = 0; i < array.length(); i++) {
             if (array.get(i).equals(new Complex(0,0)))
@@ -572,7 +572,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testDivideMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray array3 = array.divide(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).divide(array.get(i)).divide((float)5.3)
@@ -586,7 +586,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testDivideInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.divideInplace(array);
         for (int i = 0; i < array.length(); i++)
         if (array.get(i).equals(new Complex(0,0)))
@@ -597,7 +597,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testDivideInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.divideInplace(5);
         for (int i = 0; i < array.length(); i++)
             assertTrue(array.get(i).divide(5).subtract(array2.get(i)).abs() < 1e-5);
@@ -605,7 +605,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testDivideInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         array2.divideInplace(array, 5.3, array2, new Complex(3,1));
         for (int i = 0; i < array.length(); i++) {
             Complex expected = array.get(i).divide(array.get(i)).divide((float)5.3)
@@ -773,7 +773,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
     }
     @Test
     void testConcatenate() {
-        BartNDArray array2 = new BartFloatNDArray(new int[]{4, 2, 3}).fill(1);
+        BartNDArray array2 = new BartComplexFloatNDArray(new int[]{4, 2, 3}).fill(1);
         BartNDArray array3 = array.concatenate(1, array2);
         for (int i = 0; i < array.shape(0); i++)
             for (int j = 0; j < array.shape(1); j++)
@@ -788,8 +788,8 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
     @Test
     void testConcatenateMultiple() {
         BartNDArray array2 = array.copy().fill(1).slice(":", "1:3", ":");
-        BartNDArray array3 = new BartFloatNDArray(new int[]{3, 4, 4}).permuteDims(2, 1, 0);
-        BartNDArray array4 = new BartFloatNDArray(new int[]{12}).fill(new Complex(2, -2)).reshape(4, 1, 3);
+        BartNDArray array3 = new BartComplexFloatNDArray(new int[]{3, 4, 4}).permuteDims(2, 1, 0);
+        BartNDArray array4 = new BartComplexFloatNDArray(new int[]{12}).fill(new Complex(2, -2)).reshape(4, 1, 3);
         BartNDArray array5 = array.concatenate(1, array2, array3, array4);
         int start = 0;
         int end = array.shape(1);
@@ -840,8 +840,8 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
 
     @Test
     void testAngle() {
-        NDArray<Float> angle = array.angle();
+        NDArray<Float> argument = array.argument();
         array.streamLinearIndices()
-            .forEach(i -> assertTrue(array.get(i).getArgument() - angle.get(i) < 1e-5));
+            .forEach(i -> assertTrue(array.get(i).getArgument() - argument.get(i) < 1e-5));
     }
 }

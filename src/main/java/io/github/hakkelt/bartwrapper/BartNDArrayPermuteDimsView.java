@@ -47,8 +47,8 @@ public class BartNDArrayPermuteDimsView extends ComplexNDArrayPermuteDimsView<Fl
 
     @Override
     public BartNDArray createNewNDArrayOfSameTypeAsMe(int... shape) {
-        if (parent instanceof BartFloatNDArray)
-            return ((BartFloatNDArray)parent).createNewNDArrayOfSameTypeAsMe(shape);
+        if (parent instanceof BartComplexFloatNDArray)
+            return ((BartComplexFloatNDArray)parent).createNewNDArrayOfSameTypeAsMe(shape);
         else
             return ((BartNDArrayView)parent).createNewNDArrayOfSameTypeAsMe(shape);
     }

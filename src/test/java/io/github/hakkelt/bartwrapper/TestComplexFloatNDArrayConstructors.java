@@ -26,7 +26,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
     @Test
     void testDimsConstructor() {
         int[] shape = { 2, 4 };
-        ComplexNDArray<Float> array = new BartFloatNDArray(shape);
+        ComplexNDArray<Float> array = new BartComplexFloatNDArray(shape);
         assertArrayEquals(shape, array.shape());
         assertEquals(8, array.length());
         assertEquals(2, array.shape(0));
@@ -38,7 +38,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         float[] real = new float[16];
         for (int i = 0; i < real.length; i++)
             real[i] = i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -48,7 +48,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         double[] real = new double[16];
         for (int i = 0; i < real.length; i++)
             real[i] = i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -58,7 +58,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         byte[] real = new byte[16];
         for (int i = 0; i < real.length; i++)
             real[i] = (byte)i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -68,7 +68,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         short[] real = new short[16];
         for (int i = 0; i < real.length; i++)
             real[i] = (short)i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -78,7 +78,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         int[] real = new int[16];
         for (int i = 0; i < real.length; i++)
             real[i] = i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -88,7 +88,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         long[] real = new long[16];
         for (int i = 0; i < real.length; i++)
             real[i] = i;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, 0), array.get(i));
     }
@@ -99,7 +99,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = i * real.length + j;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -111,7 +111,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = i * real.length + j;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -123,7 +123,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = (byte)(i * real.length + j);
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -135,7 +135,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = (short)(i * real.length + j);
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -147,7 +147,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = i * real.length + j;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -159,7 +159,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 real[i][j] = i * real.length + j;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 assertEquals(new Complex(i * real.length + j, 0), array.get(i, j));
@@ -172,7 +172,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -186,7 +186,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -200,7 +200,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (byte)((i * real.length + j) * real[i].length + k);
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -214,7 +214,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (short)((i * real.length + j) * real[i].length + k);
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -228,7 +228,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -242,7 +242,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < real[i][j].length; k++)
@@ -257,7 +257,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = i;
             imag[i] = -i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -270,7 +270,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = i;
             imag[i] = -i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -283,7 +283,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = (byte)i;
             imag[i] = (byte)-i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -296,7 +296,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = (short)i;
             imag[i] = (short)-i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -309,7 +309,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = i;
             imag[i] = -i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -322,7 +322,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             real[i] = i;
             imag[i] = -i;
         }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             assertEquals(new Complex(i, -i), array.get(i));
     }
@@ -336,7 +336,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = i * real.length + j;
                 imag[i][j] = -(i * imag.length + j);
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -353,7 +353,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = i * real.length + j;
                 imag[i][j] = -(i * imag.length + j);
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -370,7 +370,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = (byte)(i * real.length + j);
                 imag[i][j] = (byte)(-(i * imag.length + j));
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -387,7 +387,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = (short)(i * real.length + j);
                 imag[i][j] = (short)-(i * imag.length + j);
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -404,7 +404,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = i * real.length + j;
                 imag[i][j] = -(i * imag.length + j);
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -421,7 +421,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 real[i][j] = i * real.length + j;
                 imag[i][j] = -(i * imag.length + j);
             }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++) {
                 int val = i * real.length + j;
@@ -439,7 +439,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -458,7 +458,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -477,7 +477,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (byte)((i * real.length + j) * real[i].length + k);
                     imag[i][j][k] = (byte)-((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -496,7 +496,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (short)((i * real.length + j) * real[i].length + k);
                     imag[i][j][k] = (short)-((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -515,7 +515,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -534,7 +534,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array = BartFloatNDArray.of(real, imag);
+        ComplexNDArray<Float> array = BartComplexFloatNDArray.of(real, imag);
         for (int i = 0; i < real.length; i++)
             for (int j = 0; j < real[i].length; j++)
                 for (int k = 0; k < imag[i][j].length; k++) {
@@ -549,7 +549,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
             .fillUsingCartesianIndices(idx -> (float)idx[0] * idx[1]);
         NDArray<Float> imag = new BasicFloatNDArray(20,20)
             .fillUsingCartesianIndices(idx -> (float)idx[0] * -idx[1]);
-        ComplexNDArray<Float> array = new BartFloatNDArray(real, imag);
+        ComplexNDArray<Float> array = new BartComplexFloatNDArray(real, imag);
         array.forEachWithCartesianIndices((value, idx) ->
             assertEquals(new Complex((float)idx[0] * idx[1], (float)idx[0] * -idx[1]), value));
     }
@@ -565,8 +565,8 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array1 = new BartFloatNDArray(shape).copyFrom(real, imag);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array1 = new BartComplexFloatNDArray(shape).copyFrom(real, imag);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(new Complex(0,0), 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -589,8 +589,8 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
                     imag[i][j][k] = -((i * imag.length + j) * imag[i].length + k);
                 }
-        ComplexNDArray<Float> array1 = new BartFloatNDArray(shape).copyFrom(real, imag);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array1 = new BartComplexFloatNDArray(shape).copyFrom(real, imag);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(new Complex(0,0), 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -611,7 +611,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
         NDArray<Float> array1 = new BasicFloatNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -632,7 +632,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
         NDArray<Float> array1 = new BasicFloatNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -653,7 +653,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (byte)((i * real.length + j) * real[i].length + k);
         NDArray<Byte> array1 = new BasicByteNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -675,7 +675,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (short)((i * real.length + j) * real[i].length + k);
         NDArray<Short> array1 = new BasicShortNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -696,7 +696,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
         NDArray<Integer> array1 = new BasicIntegerNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -717,7 +717,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                 for (int k = 0; k < real[i][j].length; k++)
                     real[i][j][k] = (i * real.length + j) * real[i].length + k;
         NDArray<Long> array1 = new BasicLongNDArray(shape).copyFrom(real);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(array1);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(array1);
         array1.set(0, 2,2,2);
         for (int k = 0; k < shape[2]; k++)
             for (int j = 0; j < shape[1]; j++)
@@ -733,7 +733,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
     void testWrapperConstructorWrongByteOrder() {
         ByteBuffer buffer = ByteBuffer.allocateDirect(50 * Float.BYTES * 2);
         buffer.order(ByteOrder.BIG_ENDIAN);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartFloatNDArray(buffer, 50));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartComplexFloatNDArray(buffer, 50));
         assertEquals(BartErrors.BYTE_ORDER_IS_NOT_LITTLE_ENDIAN, exception.getMessage());
     }
 
@@ -741,7 +741,7 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
     void testWrapperConstructorNotDirect() {
         ByteBuffer buffer = ByteBuffer.allocate(50 * Float.BYTES * 2);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartFloatNDArray(buffer, 50));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartComplexFloatNDArray(buffer, 50));
         assertEquals(BartErrors.BYTE_BUFFER_IS_NOT_DIRECT, exception.getMessage());
     }
 
@@ -749,8 +749,8 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
     void testWrapperConstructorVsFactoryMethod() {
         ByteBuffer buffer = ByteBuffer.allocateDirect(50 * Float.BYTES * 2);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        BartFloatNDArray array1 = new BartFloatNDArray(buffer, 50);
-        BartFloatNDArray array2 = BartFloatNDArray.of(buffer, 50);
+        BartComplexFloatNDArray array1 = new BartComplexFloatNDArray(buffer, 50);
+        BartComplexFloatNDArray array2 = BartComplexFloatNDArray.of(buffer, 50);
         array1.forEachWithLinearIndices((value, index) -> assertEquals(value, array2.get(index)));
         array2.set(5, 0);
         assertNotEquals(array1.get(0), array2.get(0));
@@ -760,8 +760,8 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
 
     @Test
     void testCopyConstructor() {
-        BartNDArray array1 = new BartFloatNDArray(50, 50).fillUsingLinearIndices(i -> new Complex(i, -i));
-        BartNDArray array2 = new BartFloatNDArray(array1);
+        BartNDArray array1 = new BartComplexFloatNDArray(50, 50).fillUsingLinearIndices(i -> new Complex(i, -i));
+        BartNDArray array2 = new BartComplexFloatNDArray(array1);
         array1.forEachWithLinearIndices((value, index) -> assertEquals(value, array2.get(index)));
         array2.set(5, 0);
         assertNotEquals(array1.get(0), array2.get(0));

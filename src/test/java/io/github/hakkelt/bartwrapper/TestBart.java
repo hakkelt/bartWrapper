@@ -27,7 +27,7 @@ class TestBart {
 
     @BeforeAll
     static void setup() throws IOException {
-        array = new BartFloatNDArray(3, 128);
+        array = new BartComplexFloatNDArray(3, 128);
         NDArray<Float> increasingNumbers = IntStream.range(-64, 64).boxed().collect(BasicFloatNDArray.getCollector(128));
         array.slice(0,":").copyFrom(increasingNumbers);
         array.slice(1,":").copyFrom(increasingNumbers);
@@ -81,7 +81,7 @@ class TestBart {
 
     @Test
     void testUninitializedBartDims() {
-        BartNDArray array = new BartFloatNDArray(128, 128, 20, 5);
+        BartNDArray array = new BartComplexFloatNDArray(128, 128, 20, 5);
         Exception exception = assertThrows(UnsupportedOperationException.class, () -> array.getBartDims());
         assertEquals(BartErrors.UNINITIALIZED_BART_DIMS, exception.getMessage());
     }
@@ -94,7 +94,7 @@ class TestBart {
             BartDimsEnum._13_SLICE,
             BartDimsEnum._10_TIME
         };
-        BartNDArray array = new BartFloatNDArray(128, 128, 20, 5)
+        BartNDArray array = new BartComplexFloatNDArray(128, 128, 20, 5)
             .fillUsingLinearIndices(i -> new Complex(i,-i));
         array.setBartDims(shapeOrder);
         assertArrayEquals(shapeOrder, array.getBartDims());
@@ -106,7 +106,7 @@ class TestBart {
     @Test
     void testCopyConstructorWithBartDims() {
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1);
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         assertTrue(array2.areBartDimsSpecified());
         assertArrayEquals(array.getBartDims(), array2.getBartDims());
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._03_COIL);
@@ -120,7 +120,7 @@ class TestBart {
             BartDimsEnum._01_PHS1,
             BartDimsEnum._13_SLICE
         };
-        BartNDArray array = new BartFloatNDArray(128, 128, 20, 5);
+        BartNDArray array = new BartComplexFloatNDArray(128, 128, 20, 5);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> array.setBartDims(shapeOrder));
         assertEquals(String.format(BartErrors.SET_BART_DIMS_SIZE_MISMATCH, array.ndim()), exception.getMessage());
     }
@@ -133,14 +133,14 @@ class TestBart {
             BartDimsEnum._01_PHS1,
             BartDimsEnum._13_SLICE
         };
-        BartNDArray array = new BartFloatNDArray(128, 128, 20, 5);
+        BartNDArray array = new BartComplexFloatNDArray(128, 128, 20, 5);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> array.setBartDims(shapeOrder));
         assertEquals(BartErrors.SET_BART_DIMS_DUPLICATES, exception.getMessage());
     }
 
     @Test
     void testSelectAndReorderBartDims() {
-        BartNDArray array = new BartFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
+        BartNDArray array = new BartComplexFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
         array.setBartDims(BartDimsEnum._01_PHS1, BartDimsEnum._00_READ, BartDimsEnum._10_TIME);
         BartNDArray array2 = array.selectAndReorderBartDims(BartDimsEnum._10_TIME, BartDimsEnum._01_PHS1);
         assertEquals(2, array2.ndim());
@@ -150,7 +150,7 @@ class TestBart {
 
     @Test
     void testSelectAndReorderBartDimsNoSelection() {
-        BartNDArray array = new BartFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
+        BartNDArray array = new BartComplexFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
         array.setBartDims(BartDimsEnum._01_PHS1, BartDimsEnum._00_READ, BartDimsEnum._10_TIME);
         BartNDArray array2 = array.selectAndReorderBartDims(
             BartDimsEnum._10_TIME, BartDimsEnum._01_PHS1, BartDimsEnum._00_READ);
@@ -160,7 +160,7 @@ class TestBart {
 
     @Test
     void testSelectAndReorderBartDimsNoReordering() {
-        BartNDArray array = new BartFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
+        BartNDArray array = new BartComplexFloatNDArray(128, 1, 64).fill(new Complex(1,-1));
         array.setBartDims(BartDimsEnum._01_PHS1, BartDimsEnum._00_READ, BartDimsEnum._10_TIME);
         BartNDArray array2 = array.selectAndReorderBartDims(BartDimsEnum._01_PHS1, BartDimsEnum._10_TIME);
         assertEquals(2, array2.ndim());

@@ -26,7 +26,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @BeforeEach
     void setup() {
-        array = new BartFloatNDArray(new int[]{ 4, 5, 3 });
+        array = new BartComplexFloatNDArray(new int[]{ 4, 5, 3 });
         array.fillUsingLinearIndices(index -> new Complex(index, -index));
         slice = array.slice(1, "1:4", ":");
     }
@@ -68,7 +68,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testDropDims() {
-        BartNDArray array2 = new BartFloatNDArray(1, 1, 1);
+        BartNDArray array2 = new BartComplexFloatNDArray(1, 1, 1);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> array2.dropDims(0, 1, 2));
         assertEquals(Errors.ALL_DIMS_DROPPED, exception.getMessage());
         BartNDArray slice2 = array2.dropDims(2, 0);
@@ -231,7 +231,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testEqual() {
-        BartNDArray array2 = new BartFloatNDArray(slice);
+        BartNDArray array2 = new BartComplexFloatNDArray(slice);
         assertEquals(slice, array2);
         array2.set(new Complex(0,0), 5);
         assertNotEquals(slice, array2);
@@ -257,7 +257,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     @Test
     void testBartDimsEqual() {
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(slice);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(slice);
         assertEquals(slice, array2);
     }
 
@@ -270,7 +270,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testBartDimsNotEqual2() {
-        BartNDArray array2 = new BartFloatNDArray(slice);
+        BartNDArray array2 = new BartComplexFloatNDArray(slice);
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
         array2.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._02_PHS2);
         assertNotEquals(slice, array2);
@@ -278,14 +278,14 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testBartDimsNotEqual3() {
-        ComplexNDArray<Float> array2 = new BartFloatNDArray(slice);
+        ComplexNDArray<Float> array2 = new BartComplexFloatNDArray(slice);
         array.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1, BartDimsEnum._02_PHS2);
         assertNotEquals(slice, array2);
     }
 
     @Test
     void testBartDimsNotEqual4() {
-        BartFloatNDArray array2 = new BartFloatNDArray(slice);
+        BartComplexFloatNDArray array2 = new BartComplexFloatNDArray(slice);
         array2.setBartDims(BartDimsEnum._00_READ, BartDimsEnum._01_PHS1);
         assertNotEquals(slice, array2);
     }
@@ -326,7 +326,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<Complex> increased = slice.stream()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(slice.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(slice.shape()));
         for (int i = 0; i < slice.length(); i++)
             assertEquals(slice.get(i).add(one), increased.get(i));
     }
@@ -336,7 +336,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<?> increased = array.stream().parallel()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(array.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(array.shape()));
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).add(one), increased.get(i));
     }
@@ -362,7 +362,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testApply() {
-        NDArray<Complex> slice2 = new BartFloatNDArray(array).slice(1, "1:4", ":").apply(value -> value.atan());
+        NDArray<Complex> slice2 = new BartComplexFloatNDArray(array).slice(1, "1:4", ":").apply(value -> value.atan());
         for (int i = 1; i < slice.length(); i++) {
             assertTrue(Math.abs(slice.get(i).atan().getReal() - slice2.get(i).getReal()) / slice2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(slice.get(i).atan().getImaginary() - slice2.get(i).getImaginary()) / slice2.get(i).getImaginary() < 1e-6);
@@ -371,7 +371,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testApplyWithLinearIndices() {
-        NDArray<Complex> slice2 = new BartFloatNDArray(array).slice(1, "1:4", ":").applyWithLinearIndices((value, index) -> value.atan().add(index));
+        NDArray<Complex> slice2 = new BartComplexFloatNDArray(array).slice(1, "1:4", ":").applyWithLinearIndices((value, index) -> value.atan().add(index));
         for (int i = 1; i < slice.length(); i++) {
             assertTrue(Math.abs(slice.get(i).atan().add(i).getReal() - slice2.get(i).getReal()) / slice2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(slice.get(i).atan().add(i).getImaginary() - slice2.get(i).getImaginary()) / slice2.get(i).getImaginary() < 1e-6);
@@ -380,7 +380,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testApplyWithCartesianIndex() {
-        NDArray<Complex> slice2 = new BartFloatNDArray(array).slice(1, "1:4", ":").applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
+        NDArray<Complex> slice2 = new BartComplexFloatNDArray(array).slice(1, "1:4", ":").applyWithCartesianIndices((value, indices) -> value.atan().add(indices[0]));
         for (int i = 0; i < slice.shape(0); i++)
             for (int j = 0; j < slice.shape(1); j++) {
                 if (i == 0 && j == 0) continue;
@@ -436,7 +436,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAdd() {
-        BartNDArray array2 = new BartFloatNDArray(slice);
+        BartNDArray array2 = new BartComplexFloatNDArray(slice);
         BartNDArray array3 = slice.add(array2);
         for (int i = 0; i < slice.length(); i++)
             assertEquals(slice.get(i).multiply(2), array3.get(i));
@@ -444,7 +444,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddArrayToSlice() {
-        BartNDArray array2 = new BartFloatNDArray(slice);
+        BartNDArray array2 = new BartComplexFloatNDArray(slice);
         BartNDArray array3 = slice.add(array2);
         for (int i = 0; i < slice.length(); i++)
             assertEquals(slice.get(i).multiply(2), array3.get(i));
@@ -452,7 +452,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddSliceToArray() {
-        BartNDArray array2 = new BartFloatNDArray(slice);
+        BartNDArray array2 = new BartComplexFloatNDArray(slice);
         BartNDArray array3 = array2.add(slice);
         for (int i = 0; i < slice.length(); i++)
             assertEquals(slice.get(i).multiply(2), array3.get(i));
@@ -475,7 +475,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray slice2 = array2.slice(1, "1:4", ":");
         BartNDArray array3 = slice2.add(slice, 5.3, slice2, new Complex(3,1));
         for (int i = 0; i < slice.length(); i++) {
@@ -486,7 +486,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray slice2 = array2.slice(1, "1:4", ":");
         slice2.addInplace(slice);
         for (int i = 0; i < slice.length(); i++)
@@ -495,7 +495,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray slice2 = array2.slice(1, "1:4", ":");
         slice2.addInplace(5);
         for (int i = 0; i < slice.length(); i++)
@@ -504,7 +504,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAddInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray slice2 = array2.slice(1, "1:4", ":");
         slice2.addInplace(slice, 5.3, slice2, new Complex(3,1));
         for (int i = 0; i < slice.length(); i++) {
@@ -603,7 +603,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     @Test
     void testPermuteDimsAndToArray() {
         BartNDArray pArray = slice.permuteDims(1,0);
-        assertTrue(pArray.copy() instanceof BartFloatNDArray);
+        assertTrue(pArray.copy() instanceof BartComplexFloatNDArray);
         Complex[][] arr = (Complex[][])pArray.toArray();
         for (int i = 0; i < pArray.shape(0); i++)
             for (int j = 0; j < pArray.shape(1); j++)
@@ -617,7 +617,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
         masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
         slice.forEachSequential(value -> assertTrue(value.abs() <= 20));
-        assertTrue(masked.copy() instanceof BartFloatNDArray);
+        assertTrue(masked.copy() instanceof BartComplexFloatNDArray);
     }
 
     @Test
@@ -646,7 +646,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testConcatenate() {
-        BartNDArray array2 = new BartFloatNDArray(new int[]{5, 3}).fill(1);
+        BartNDArray array2 = new BartComplexFloatNDArray(new int[]{5, 3}).fill(1);
         BartNDArray array3 = slice.concatenate(0, array2);
         for (int i = 0; i < slice.shape(0); i++)
             for (int j = 0; j < slice.shape(1); j++)
@@ -659,8 +659,8 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     @Test
     void testConcatenateMultiple() {
         BartNDArray array2 = slice.copy().fill(1).slice("1:1", ":");
-        BartNDArray array3 = new BartFloatNDArray(new int[]{3, 2}).permuteDims(1, 0);
-        BartNDArray array4 = new BartFloatNDArray(new int[]{9}).fill(new Complex(2, -2)).reshape(3, 3);
+        BartNDArray array3 = new BartComplexFloatNDArray(new int[]{3, 2}).permuteDims(1, 0);
+        BartNDArray array4 = new BartComplexFloatNDArray(new int[]{9}).fill(new Complex(2, -2)).reshape(3, 3);
         BartNDArray array5 = slice.concatenate(0, array2, array3, array4);
         int start = 0;
         int end = slice.shape(0);
@@ -707,8 +707,8 @@ class TestComplexFloatNDArraySlice implements NameTrait {
 
     @Test
     void testAngle() {
-        NDArray<Float> angle = slice.angle();
+        NDArray<Float> argument = slice.argument();
         slice.streamLinearIndices()
-            .forEach(i -> assertTrue(slice.get(i).getArgument() - angle.get(i) < 1e-5));
+            .forEach(i -> assertTrue(slice.get(i).getArgument() - argument.get(i) < 1e-5));
     }
 }

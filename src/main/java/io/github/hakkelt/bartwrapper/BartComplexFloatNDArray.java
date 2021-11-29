@@ -25,20 +25,20 @@ import org.apache.commons.math3.complex.Complex;
 /**
  * Reference implementation for the NDArray of float (single-precision, 32 bit floating point) values.
  */
-public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements BartNDArray {
+public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> implements BartNDArray {
     protected ByteBuffer byteBuffer;
     protected FloatBuffer floatBuffer;
     protected BartDimsEnum[] bartDims = null;
 
 
-    protected BartFloatNDArray() {}
+    protected BartComplexFloatNDArray() {}
 
     /**
      * Simple constructor that defines only the shape of the NDArray and fills it with zeros.
      * 
      * @param dims dimensions / shape of the NDArray
      */
-    public BartFloatNDArray(int... dims) {
+    public BartComplexFloatNDArray(int... dims) {
         baseConstuctor(dims);
         byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -53,7 +53,7 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param buffer ByteBuffer to be wrapped
      * @param dims shape of the BartNDArray to be created
      */
-    public BartFloatNDArray(ByteBuffer buffer, int... dims) {
+    public BartComplexFloatNDArray(ByteBuffer buffer, int... dims) {
         baseConstuctor(dims);
         byteBuffer = buffer;
         if (byteBuffer.order() != ByteOrder.LITTLE_ENDIAN)
@@ -68,7 +68,7 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * 
      * @param array NDArray from which entries are copied from.
      */
-    public BartFloatNDArray(NDArray<?> array) {
+    public BartComplexFloatNDArray(NDArray<?> array) {
         baseConstuctor(array.shape());
         byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -84,7 +84,7 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param real NDArray from which real part of the new array is copied from.
      * @param imag NDArray from which imaginary part of the new array is copied from.
      */
-    public BartFloatNDArray(NDArray<? extends Number> real, NDArray<? extends Number> imag) {
+    public BartComplexFloatNDArray(NDArray<? extends Number> real, NDArray<? extends Number> imag) {
         baseConstuctor(real.shape());
         byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -99,8 +99,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param dims shape of the BartNDArray to be created
      * @return a BartNDArray of size dims filled with values from source ByteBuffer
      */
-    public static BartFloatNDArray of(ByteBuffer source, int... dims) {
-        return (BartFloatNDArray)new BartFloatNDArray(source, dims).copy();
+    public static BartComplexFloatNDArray of(ByteBuffer source, int... dims) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(source, dims).copy();
     }
 
     /**
@@ -109,8 +109,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of float values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of float values
      */
-    public static BartFloatNDArray of(float... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(float... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -119,8 +119,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of double values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of double values
      */
-    public static BartFloatNDArray of(double... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(double... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -129,8 +129,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of byte values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of byte values
      */
-    public static BartFloatNDArray of(byte... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(byte... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -139,8 +139,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of short values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of short values
      */
-    public static BartFloatNDArray of(short... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(short... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -149,8 +149,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of int values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of int values
      */
-    public static BartFloatNDArray of(int... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(int... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -159,8 +159,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param array a list or 1D array of long values from which a SimpleITKFloat32NDArray is created.
      * @return an NDArray created from a list or 1D array of long values
      */
-    public static BartFloatNDArray of(long... array) {
-        return (BartFloatNDArray)new BartFloatNDArray(array.length).copyFrom(array);
+    public static BartComplexFloatNDArray of(long... array) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(array.length).copyFrom(array);
     }
     
     /**
@@ -170,8 +170,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * from which a SimpleITKComplexFloat32NDArray is created.
      * @return an NDArray created from a multi-dimensional array of numeric values
      */
-    public static BartFloatNDArray of(Object[] realOrComplex) {
-        return (BartFloatNDArray)new BartFloatNDArray(NDArrayUtils.computeDims(realOrComplex)).copyFrom(realOrComplex);
+    public static BartComplexFloatNDArray of(Object[] realOrComplex) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(NDArrayUtils.computeDims(realOrComplex)).copyFrom(realOrComplex);
     }
     
     /**
@@ -181,8 +181,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of float values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of float values
      */
-    public static BartFloatNDArray of(float[] real, float[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(float[] real, float[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -192,8 +192,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of double values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of double values
      */
-    public static BartFloatNDArray of(double[] real, double[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(double[] real, double[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -203,8 +203,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of byte values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of byte values
      */
-    public static BartFloatNDArray of(byte[] real, byte[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(byte[] real, byte[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -214,8 +214,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of short values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of short values
      */
-    public static BartFloatNDArray of(short[] real, short[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(short[] real, short[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -225,8 +225,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of int values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of int values
      */
-    public static BartFloatNDArray of(int[] real, int[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(int[] real, int[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -236,8 +236,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a 1D array of long values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two 1D array of long values
      */
-    public static BartFloatNDArray of(long[] real, long[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(real.length).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(long[] real, long[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(real.length).copyFrom(real, imag);
     }
     
     /**
@@ -247,19 +247,19 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
      * @param imag a multi-dimensional array of numeric values from which the imaginary part of the created SimpleITKComplexFloat32NDArray is read.
      * @return a BartNDArray created from the two multi-dimensional arrays of numeric values
      */
-    public static BartFloatNDArray of(Object[] real, Object[] imag) {
-        return (BartFloatNDArray)new BartFloatNDArray(NDArrayUtils.computeDims(real)).copyFrom(real, imag);
+    public static BartComplexFloatNDArray of(Object[] real, Object[] imag) {
+        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(NDArrayUtils.computeDims(real)).copyFrom(real, imag);
     }
 
     @Override
-    public BartFloatNDArray copyFrom(NDArray<?> array) {
-        if (array instanceof BartFloatNDArray) {
-            byteBuffer.rewind().put(((BartFloatNDArray)array).byteBuffer.rewind());
-            if (((BartFloatNDArray)array).bartDims != null)
-                bartDims = ((BartFloatNDArray)array).bartDims.clone();
+    public BartComplexFloatNDArray copyFrom(NDArray<?> array) {
+        if (array instanceof BartComplexFloatNDArray) {
+            byteBuffer.rewind().put(((BartComplexFloatNDArray)array).byteBuffer.rewind());
+            if (((BartComplexFloatNDArray)array).bartDims != null)
+                bartDims = ((BartComplexFloatNDArray)array).bartDims.clone();
         } else if (array instanceof BartNDArrayReshapeView &&
-                ((BartNDArrayReshapeView)array).getParent() instanceof BartFloatNDArray) {
-            byteBuffer.rewind().put(((BartFloatNDArray)((BartNDArrayReshapeView)array).getParent()).byteBuffer.rewind());
+                ((BartNDArrayReshapeView)array).getParent() instanceof BartComplexFloatNDArray) {
+            byteBuffer.rewind().put(((BartComplexFloatNDArray)((BartNDArrayReshapeView)array).getParent()).byteBuffer.rewind());
         } else {
             super.copyFrom(array);
         }
@@ -268,12 +268,12 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
 
     @Override
     public BartNDArray similar() {
-        return new BartFloatNDArray(shape);
+        return new BartComplexFloatNDArray(shape);
     }
 
     @Override
     public BartNDArray copy() {
-        return new BartFloatNDArray(this);
+        return new BartComplexFloatNDArray(this);
     }
 
     @Override
@@ -338,7 +338,7 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
     }
 
     public static Collector<Object, List<Object>, NDArray<Complex>> getCollector(int... dims) {
-        return new ComplexNDArrayCollector<>(new BartFloatNDArray(dims));
+        return new ComplexNDArrayCollector<>(new BartComplexFloatNDArray(dims));
     }
 
     public ByteBuffer getByteBuffer() {
@@ -373,8 +373,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
         return IntStream.of(array).anyMatch(num -> Collections.frequency(set, num) > 1);
     }
 
-    protected BartFloatNDArray createNewNDArrayOfSameTypeAsMe(int... dims) {
-        return new BartFloatNDArray(dims);
+    protected BartComplexFloatNDArray createNewNDArrayOfSameTypeAsMe(int... dims) {
+        return new BartComplexFloatNDArray(dims);
     }
 
     protected NDArray<Float> createNewRealNDArrayOfSameTypeAsMe(int... dims) {
@@ -393,8 +393,8 @@ public class BartFloatNDArray extends AbstractComplexNDArray<Float> implements B
             return false;
         if (!(obj instanceof BartNDArray) && areBartDimsSpecified())
             return false;
-        if (obj instanceof BartFloatNDArray)
-            return ((BartFloatNDArray)obj).byteBuffer.rewind().equals(byteBuffer.rewind());
+        if (obj instanceof BartComplexFloatNDArray)
+            return ((BartComplexFloatNDArray)obj).byteBuffer.rewind().equals(byteBuffer.rewind());
         return super.equals(obj);
     }
 

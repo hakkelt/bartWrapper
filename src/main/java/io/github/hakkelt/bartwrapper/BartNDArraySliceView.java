@@ -52,8 +52,8 @@ public class BartNDArraySliceView extends ComplexNDArraySliceView<Float> impleme
 
     @Override
     public BartNDArray createNewNDArrayOfSameTypeAsMe(int... dims) {
-        if (parent instanceof BartFloatNDArray)
-            return ((BartFloatNDArray)parent).createNewNDArrayOfSameTypeAsMe(dims);
+        if (parent instanceof BartComplexFloatNDArray)
+            return ((BartComplexFloatNDArray)parent).createNewNDArrayOfSameTypeAsMe(dims);
         else
             return ((BartNDArrayView)parent).createNewNDArrayOfSameTypeAsMe(dims);
     }

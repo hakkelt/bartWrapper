@@ -26,7 +26,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @BeforeEach
     void setup() {
-        array = new BartFloatNDArray(new int[]{ 4, 5, 3 });
+        array = new BartComplexFloatNDArray(new int[]{ 4, 5, 3 });
         array.fillUsingLinearIndices(index -> new Complex(index, -index));
         mask = new BasicByteNDArray(array.abs().mapWithLinearIndices((value, index) -> (float)index % 2));
         masked = array.mask(mask);
@@ -93,7 +93,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
         masked2.forEachSequential((value) -> assertTrue(value.abs() > 20));
         masked2 = masked.maskWithLinearIndices((value, index) -> value.abs() > 20);
         masked2.forEachSequential((value) -> assertTrue(value.abs() > 20));
-        assertTrue(masked2.copy() instanceof BartFloatNDArray);
+        assertTrue(masked2.copy() instanceof BartComplexFloatNDArray);
     }
 
     @Test
@@ -176,7 +176,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testEqual() {
-        BartNDArray array2 = new BartFloatNDArray(masked);
+        BartNDArray array2 = new BartComplexFloatNDArray(masked);
         assertEquals(masked, array2);
         array2.set(new Complex(0,0), 5);
         assertNotEquals(masked, array2);
@@ -201,7 +201,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testBartDimsNotEqual() {
-        BartFloatNDArray array2 = new BartFloatNDArray(masked);
+        BartComplexFloatNDArray array2 = new BartComplexFloatNDArray(masked);
         array2.setBartDims(BartDimsEnum._00_READ);
         assertNotEquals(masked, array2);
     }
@@ -241,7 +241,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<Complex> increased = masked.stream()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(masked.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(masked.shape()));
         for (int i = 0; i < masked.length(); i++)
             assertEquals(masked.get(i).add(one), increased.get(i));
     }
@@ -251,7 +251,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
         final Complex one = new Complex(1,-1);
         NDArray<?> increased = array.stream().parallel()
             .map((value) -> value.add(one))
-            .collect(BartFloatNDArray.getCollector(array.shape()));
+            .collect(BartComplexFloatNDArray.getCollector(array.shape()));
         for (int i = 0; i < array.length(); i++)
             assertEquals(array.get(i).add(one), increased.get(i));
     }
@@ -279,7 +279,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testApply() {
-        NDArray<Complex> masked2 = new BartFloatNDArray(array).mask(mask).apply(value -> value.atan());
+        NDArray<Complex> masked2 = new BartComplexFloatNDArray(array).mask(mask).apply(value -> value.atan());
         for (int i = 1; i < masked.length(); i++) {
             assertTrue(Math.abs(masked.get(i).atan().getReal() - masked2.get(i).getReal()) / masked2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(masked.get(i).atan().getImaginary() - masked2.get(i).getImaginary()) / masked2.get(i).getImaginary() < 1e-6);
@@ -288,7 +288,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testApplyWithLinearIndices() {
-        NDArray<Complex> masked2 = new BartFloatNDArray(array).mask(mask).applyWithLinearIndices((value, index) -> value.atan().add(index));
+        NDArray<Complex> masked2 = new BartComplexFloatNDArray(array).mask(mask).applyWithLinearIndices((value, index) -> value.atan().add(index));
         for (int i = 1; i < masked.length(); i++) {
             assertTrue(Math.abs(masked.get(i).atan().add(i).getReal() - masked2.get(i).getReal()) / masked2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(masked.get(i).atan().add(i).getImaginary() - masked2.get(i).getImaginary()) / masked2.get(i).getImaginary() < 1e-6);
@@ -331,7 +331,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAdd() {
-        BartNDArray array2 = new BartFloatNDArray(masked);
+        BartNDArray array2 = new BartComplexFloatNDArray(masked);
         BartNDArray array3 = masked.add(array2);
         for (int i = 0; i < masked.length(); i++)
             assertEquals(masked.get(i).multiply(2), array3.get(i));
@@ -339,7 +339,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddArrayToMasked() {
-        BartNDArray array2 = new BartFloatNDArray(masked);
+        BartNDArray array2 = new BartComplexFloatNDArray(masked);
         BartNDArray array3 = masked.add(array2);
         for (int i = 0; i < masked.length(); i++)
             assertEquals(masked.get(i).multiply(2), array3.get(i));
@@ -347,7 +347,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddMaskedToArray() {
-        BartNDArray array2 = new BartFloatNDArray(masked);
+        BartNDArray array2 = new BartComplexFloatNDArray(masked);
         BartNDArray array3 = array2.add(masked);
         for (int i = 0; i < masked.length(); i++)
             assertEquals(masked.get(i).multiply(2), array3.get(i));
@@ -370,7 +370,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray masked2 = array2.mask(mask);
         BartNDArray array3 = masked2.add(masked, 5.3, masked2, new Complex(3,1));
         for (int i = 0; i < masked.length(); i++) {
@@ -381,7 +381,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddInplace() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray masked2 = array2.mask(mask);
         masked2.addInplace(masked);
         for (int i = 0; i < masked.length(); i++)
@@ -390,7 +390,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddInplaceScalar() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray masked2 = array2.mask(mask);
         masked2.addInplace(5);
         for (int i = 0; i < masked.length(); i++)
@@ -399,7 +399,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAddInplaceMultiple() {
-        BartNDArray array2 = new BartFloatNDArray(array);
+        BartNDArray array2 = new BartComplexFloatNDArray(array);
         BartNDArray masked2 = array2.mask(mask);
         masked2.addInplace(masked, 5.3, masked2, new Complex(3,1));
         for (int i = 0; i < masked.length(); i++) {
@@ -510,7 +510,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testConcatenate() {
-        BartNDArray array2 = new BartFloatNDArray(5).fill(1);
+        BartNDArray array2 = new BartComplexFloatNDArray(5).fill(1);
         BartNDArray array3 = masked.concatenate(0, array2);
         for (int i = 0; i < masked.shape(0); i++)
             assertEquals(masked.get(i), array3.get(i));
@@ -521,8 +521,8 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     @Test
     void testConcatenateMultiple() {
         BartNDArray array2 = masked.copy().fill(1).slice("1:1");
-        BartNDArray array3 = new BartFloatNDArray(3).permuteDims(0);
-        BartNDArray array4 = new BartFloatNDArray(3,3).fill(new Complex(2, -2)).reshape(9);
+        BartNDArray array3 = new BartComplexFloatNDArray(3).permuteDims(0);
+        BartNDArray array4 = new BartComplexFloatNDArray(3,3).fill(new Complex(2, -2)).reshape(9);
         BartNDArray array5 = masked.concatenate(0, array2, array3, array4);
         int start = 0;
         int end = masked.shape(0);
@@ -565,8 +565,8 @@ class TestComplexFloatNDArrayMask implements NameTrait {
 
     @Test
     void testAngle() {
-        NDArray<Float> angle = masked.angle();
+        NDArray<Float> argument = masked.argument();
         masked.streamLinearIndices()
-            .forEach(i -> assertTrue(masked.get(i).getArgument() - angle.get(i) < 1e-5));
+            .forEach(i -> assertTrue(masked.get(i).getArgument() - argument.get(i) < 1e-5));
     }
 }
