@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":10,"i35":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":10,"i32":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -147,7 +147,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">BartComplexFloatNDArray</span>
 extends io.github.hakkelt.ndarrays.AbstractComplexNDArray&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html?is-external=true" title="class or interface in java.lang" class="externalLink">Float</a>&gt;
 implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></pre>
-<div class="block">Reference implementation for the NDArray of float (single-precision, 32 bit floating point) values.</div>
+<div class="block">Implementation for the NDArray of float (single-precision, 32 bit floating point) values
+ that is compatible with arrays expected by BART. It also contains some utility functions to
+ help dealing with the 16 dimensions used by BART.</div>
 </li>
 </ul>
 </div>
@@ -184,13 +186,6 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
                        io.github.hakkelt.ndarrays.NDArray&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Number.html?is-external=true" title="class or interface in java.lang" class="externalLink">Number</a>&gt;&nbsp;imag)</code></th>
 <td class="colLast">
 <div class="block">Copy constructor.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.nio.ByteBuffer,int...)">BartComplexFloatNDArray</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a>&nbsp;buffer,
-                       int...&nbsp;dims)</code></th>
-<td class="colLast">
-<div class="block">Wrapper constructor.</div>
 </td>
 </tr>
 </table>
@@ -266,58 +261,48 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByteBuffer()">getByteBuffer</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Collector.html?is-external=true" title="class or interface in java.util.stream" class="externalLink">Collector</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>,&#8203;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html?is-external=true" title="class or interface in java.util" class="externalLink">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>&gt;,&#8203;io.github.hakkelt.ndarrays.NDArray&lt;org.apache.commons.math3.complex.Complex&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollector(int...)">getCollector</a></span>&#8203;(int...&nbsp;dims)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/FloatBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">FloatBuffer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFloatBuffer()">getFloatBuffer</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html?is-external=true" title="class or interface in java.lang" class="externalLink">Float</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImagUnchecked(int)">getImagUnchecked</a></span>&#8203;(int&nbsp;linearIndex)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html?is-external=true" title="class or interface in java.lang" class="externalLink">Float</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImagUnchecked(int...)">getImagUnchecked</a></span>&#8203;(int...&nbsp;indices)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNamePrefix()">getNamePrefix</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html?is-external=true" title="class or interface in java.lang" class="externalLink">Float</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRealUnchecked(int)">getRealUnchecked</a></span>&#8203;(int&nbsp;linearIndex)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html?is-external=true" title="class or interface in java.lang" class="externalLink">Float</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRealUnchecked(int...)">getRealUnchecked</a></span>&#8203;(int...&nbsp;indices)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(byte...)">of</a></span>&#8203;(byte...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of byte values.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(byte%5B%5D,byte%5B%5D)">of</a></span>&#8203;(byte[]&nbsp;real,
   byte[]&nbsp;imag)</code></th>
@@ -325,14 +310,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two 1D array of byte values.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(double...)">of</a></span>&#8203;(double...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of double values.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(double%5B%5D,double%5B%5D)">of</a></span>&#8203;(double[]&nbsp;real,
   double[]&nbsp;imag)</code></th>
@@ -340,14 +325,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two 1D array of double values.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(float...)">of</a></span>&#8203;(float...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of float values.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(float%5B%5D,float%5B%5D)">of</a></span>&#8203;(float[]&nbsp;real,
   float[]&nbsp;imag)</code></th>
@@ -355,14 +340,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two 1D array of float values.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(int...)">of</a></span>&#8203;(int...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of int values.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(int%5B%5D,int%5B%5D)">of</a></span>&#8203;(int[]&nbsp;real,
   int[]&nbsp;imag)</code></th>
@@ -370,14 +355,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two 1D array of int values.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(long...)">of</a></span>&#8203;(long...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of long values.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(long%5B%5D,long%5B%5D)">of</a></span>&#8203;(long[]&nbsp;real,
   long[]&nbsp;imag)</code></th>
@@ -385,14 +370,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two 1D array of long values.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(short...)">of</a></span>&#8203;(short...&nbsp;array)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a list or 1D array of short values.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(short%5B%5D,short%5B%5D)">of</a></span>&#8203;(short[]&nbsp;real,
   short[]&nbsp;imag)</code></th>
@@ -400,14 +385,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from a list or 1D array of short values.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.Object%5B%5D)">of</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>[]&nbsp;realOrComplex)</code></th>
 <td class="colLast">
 <div class="block">Factory method that creates an NDArray from a multi-dimensional array of numeric values (including Complex type).</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.Object%5B%5D,java.lang.Object%5B%5D)">of</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>[]&nbsp;real,
   <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>[]&nbsp;imag)</code></th>
@@ -415,22 +400,14 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <div class="block">Factory method that creates a BartNDArray from two multi-dimensional arrays of numeric values.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code>static <a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.nio.ByteBuffer,int...)">of</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a>&nbsp;source,
-  int...&nbsp;dims)</code></th>
-<td class="colLast">
-<div class="block">Factory method that creates a new NDArray and copies all values from the supplied source.</div>
-</td>
-</tr>
-<tr id="i34" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBartDims(io.github.hakkelt.bartwrapper.BartDimsEnum...)">setBartDims</a></span>&#8203;(<a href="BartDimsEnum.html" title="enum in io.github.hakkelt.bartwrapper">BartDimsEnum</a>...&nbsp;bartDims)</code></th>
 <td class="colLast">
 <div class="block">Sets the meaning of dimensions.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -462,7 +439,7 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.github.hakkelt.bartwrapper.<a href="BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></h3>
-<code><a href="BartNDArray.html#add(byte)">add</a>, <a href="BartNDArray.html#add(double)">add</a>, <a href="BartNDArray.html#add(float)">add</a>, <a href="BartNDArray.html#add(int)">add</a>, <a href="BartNDArray.html#add(long)">add</a>, <a href="BartNDArray.html#add(short)">add</a>, <a href="BartNDArray.html#add(io.github.hakkelt.ndarrays.NDArray)">add</a>, <a href="BartNDArray.html#add(java.lang.Object...)">add</a>, <a href="BartNDArray.html#addInplace(byte)">addInplace</a>, <a href="BartNDArray.html#addInplace(double)">addInplace</a>, <a href="BartNDArray.html#addInplace(float)">addInplace</a>, <a href="BartNDArray.html#addInplace(int)">addInplace</a>, <a href="BartNDArray.html#addInplace(long)">addInplace</a>, <a href="BartNDArray.html#addInplace(short)">addInplace</a>, <a href="BartNDArray.html#addInplace(io.github.hakkelt.ndarrays.NDArray)">addInplace</a>, <a href="BartNDArray.html#addInplace(java.lang.Object...)">addInplace</a>, <a href="BartNDArray.html#concatenate(int,io.github.hakkelt.ndarrays.NDArray...)">concatenate</a>, <a href="BartNDArray.html#copyFrom(byte%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(byte%5B%5D,byte%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(double%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(double%5B%5D,double%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(float%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(float%5B%5D,float%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(int%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(int%5B%5D,int%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(long%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(long%5B%5D,long%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(short%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(short%5B%5D,short%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(io.github.hakkelt.ndarrays.NDArray,io.github.hakkelt.ndarrays.NDArray)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(java.lang.Object%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(java.lang.Object%5B%5D,java.lang.Object%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#divide(byte)">divide</a>, <a href="BartNDArray.html#divide(double)">divide</a>, <a href="BartNDArray.html#divide(float)">divide</a>, <a href="BartNDArray.html#divide(int)">divide</a>, <a href="BartNDArray.html#divide(long)">divide</a>, <a href="BartNDArray.html#divide(short)">divide</a>, <a href="BartNDArray.html#divide(io.github.hakkelt.ndarrays.NDArray)">divide</a>, <a href="BartNDArray.html#divide(java.lang.Object...)">divide</a>, <a href="BartNDArray.html#divideInplace(byte)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(double)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(float)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(int)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(long)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(short)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(io.github.hakkelt.ndarrays.NDArray)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(java.lang.Object...)">divideInplace</a>, <a href="BartNDArray.html#dropDims(int...)">dropDims</a>, <a href="BartNDArray.html#fill(double)">fill</a>, <a href="BartNDArray.html#fill(java.lang.Float)">fill</a>, <a href="BartNDArray.html#fill(org.apache.commons.math3.complex.Complex)">fill</a>, <a href="BartNDArray.html#inverseMask(io.github.hakkelt.ndarrays.NDArray)">inverseMask</a>, <a href="BartNDArray.html#map(java.util.function.UnaryOperator)">map</a>, <a href="BartNDArray.html#mapWithCartesianIndices(java.util.function.BiFunction)">mapWithCartesianIndices</a>, <a href="BartNDArray.html#mapWithLinearIndices(java.util.function.BiFunction)">mapWithLinearIndices</a>, <a href="BartNDArray.html#mask(io.github.hakkelt.ndarrays.NDArray)">mask</a>, <a href="BartNDArray.html#mask(java.util.function.Predicate)">mask</a>, <a href="BartNDArray.html#maskWithCartesianIndices(java.util.function.BiPredicate)">maskWithCartesianIndices</a>, <a href="BartNDArray.html#maskWithLinearIndices(java.util.function.BiPredicate)">maskWithLinearIndices</a>, <a href="BartNDArray.html#multiply(byte)">multiply</a>, <a href="BartNDArray.html#multiply(double)">multiply</a>, <a href="BartNDArray.html#multiply(float)">multiply</a>, <a href="BartNDArray.html#multiply(int)">multiply</a>, <a href="BartNDArray.html#multiply(long)">multiply</a>, <a href="BartNDArray.html#multiply(short)">multiply</a>, <a href="BartNDArray.html#multiply(io.github.hakkelt.ndarrays.NDArray)">multiply</a>, <a href="BartNDArray.html#multiply(java.lang.Object...)">multiply</a>, <a href="BartNDArray.html#multiplyInplace(byte)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(double)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(float)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(int)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(long)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(short)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(io.github.hakkelt.ndarrays.NDArray)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(java.lang.Object...)">multiplyInplace</a>, <a href="BartNDArray.html#permuteDims(int...)">permuteDims</a>, <a href="BartNDArray.html#prepareToPassToBackend()">prepareToPassToBackend</a>, <a href="BartNDArray.html#reshape(int...)">reshape</a>, <a href="BartNDArray.html#selectAndReorderBartDims(io.github.hakkelt.bartwrapper.BartDimsEnum...)">selectAndReorderBartDims</a>, <a href="BartNDArray.html#selectDims(int...)">selectDims</a>, <a href="BartNDArray.html#slice(java.lang.Object...)">slice</a>, <a href="BartNDArray.html#squeeze()">squeeze</a>, <a href="BartNDArray.html#subtract(byte)">subtract</a>, <a href="BartNDArray.html#subtract(double)">subtract</a>, <a href="BartNDArray.html#subtract(float)">subtract</a>, <a href="BartNDArray.html#subtract(int)">subtract</a>, <a href="BartNDArray.html#subtract(long)">subtract</a>, <a href="BartNDArray.html#subtract(short)">subtract</a>, <a href="BartNDArray.html#subtract(io.github.hakkelt.ndarrays.NDArray)">subtract</a>, <a href="BartNDArray.html#subtract(java.lang.Object...)">subtract</a>, <a href="BartNDArray.html#subtractInplace(byte)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(double)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(float)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(int)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(long)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(short)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(io.github.hakkelt.ndarrays.NDArray)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(java.lang.Object...)">subtractInplace</a>, <a href="BartNDArray.html#sum(int...)">sum</a></code></li>
+<code><a href="BartNDArray.html#add(byte)">add</a>, <a href="BartNDArray.html#add(double)">add</a>, <a href="BartNDArray.html#add(float)">add</a>, <a href="BartNDArray.html#add(int)">add</a>, <a href="BartNDArray.html#add(long)">add</a>, <a href="BartNDArray.html#add(short)">add</a>, <a href="BartNDArray.html#add(io.github.hakkelt.ndarrays.NDArray)">add</a>, <a href="BartNDArray.html#add(java.lang.Object...)">add</a>, <a href="BartNDArray.html#addInplace(byte)">addInplace</a>, <a href="BartNDArray.html#addInplace(double)">addInplace</a>, <a href="BartNDArray.html#addInplace(float)">addInplace</a>, <a href="BartNDArray.html#addInplace(int)">addInplace</a>, <a href="BartNDArray.html#addInplace(long)">addInplace</a>, <a href="BartNDArray.html#addInplace(short)">addInplace</a>, <a href="BartNDArray.html#addInplace(io.github.hakkelt.ndarrays.NDArray)">addInplace</a>, <a href="BartNDArray.html#addInplace(java.lang.Object...)">addInplace</a>, <a href="BartNDArray.html#concatenate(int,io.github.hakkelt.ndarrays.NDArray...)">concatenate</a>, <a href="BartNDArray.html#copyFrom(byte%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(byte%5B%5D,byte%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(double%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(double%5B%5D,double%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(float%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(float%5B%5D,float%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(int%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(int%5B%5D,int%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(long%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(long%5B%5D,long%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(short%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(short%5B%5D,short%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(io.github.hakkelt.ndarrays.NDArray,io.github.hakkelt.ndarrays.NDArray)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(java.lang.Object%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#copyFrom(java.lang.Object%5B%5D,java.lang.Object%5B%5D)">copyFrom</a>, <a href="BartNDArray.html#divide(byte)">divide</a>, <a href="BartNDArray.html#divide(double)">divide</a>, <a href="BartNDArray.html#divide(float)">divide</a>, <a href="BartNDArray.html#divide(int)">divide</a>, <a href="BartNDArray.html#divide(long)">divide</a>, <a href="BartNDArray.html#divide(short)">divide</a>, <a href="BartNDArray.html#divide(io.github.hakkelt.ndarrays.NDArray)">divide</a>, <a href="BartNDArray.html#divide(java.lang.Object...)">divide</a>, <a href="BartNDArray.html#divideInplace(byte)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(double)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(float)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(int)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(long)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(short)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(io.github.hakkelt.ndarrays.NDArray)">divideInplace</a>, <a href="BartNDArray.html#divideInplace(java.lang.Object...)">divideInplace</a>, <a href="BartNDArray.html#dropDims(int...)">dropDims</a>, <a href="BartNDArray.html#fill(double)">fill</a>, <a href="BartNDArray.html#fill(java.lang.Float)">fill</a>, <a href="BartNDArray.html#fill(org.apache.commons.math3.complex.Complex)">fill</a>, <a href="BartNDArray.html#inverseMask(io.github.hakkelt.ndarrays.NDArray)">inverseMask</a>, <a href="BartNDArray.html#map(java.util.function.UnaryOperator)">map</a>, <a href="BartNDArray.html#mapWithCartesianIndices(java.util.function.BiFunction)">mapWithCartesianIndices</a>, <a href="BartNDArray.html#mapWithLinearIndices(java.util.function.BiFunction)">mapWithLinearIndices</a>, <a href="BartNDArray.html#mask(io.github.hakkelt.ndarrays.NDArray)">mask</a>, <a href="BartNDArray.html#mask(java.util.function.Predicate)">mask</a>, <a href="BartNDArray.html#maskWithCartesianIndices(java.util.function.BiPredicate)">maskWithCartesianIndices</a>, <a href="BartNDArray.html#maskWithLinearIndices(java.util.function.BiPredicate)">maskWithLinearIndices</a>, <a href="BartNDArray.html#multiply(byte)">multiply</a>, <a href="BartNDArray.html#multiply(double)">multiply</a>, <a href="BartNDArray.html#multiply(float)">multiply</a>, <a href="BartNDArray.html#multiply(int)">multiply</a>, <a href="BartNDArray.html#multiply(long)">multiply</a>, <a href="BartNDArray.html#multiply(short)">multiply</a>, <a href="BartNDArray.html#multiply(io.github.hakkelt.ndarrays.NDArray)">multiply</a>, <a href="BartNDArray.html#multiply(java.lang.Object...)">multiply</a>, <a href="BartNDArray.html#multiplyInplace(byte)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(double)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(float)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(int)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(long)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(short)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(io.github.hakkelt.ndarrays.NDArray)">multiplyInplace</a>, <a href="BartNDArray.html#multiplyInplace(java.lang.Object...)">multiplyInplace</a>, <a href="BartNDArray.html#permuteDims(int...)">permuteDims</a>, <a href="BartNDArray.html#reshape(int...)">reshape</a>, <a href="BartNDArray.html#selectAndReorderBartDims(io.github.hakkelt.bartwrapper.BartDimsEnum...)">selectAndReorderBartDims</a>, <a href="BartNDArray.html#selectDims(int...)">selectDims</a>, <a href="BartNDArray.html#slice(java.lang.Object...)">slice</a>, <a href="BartNDArray.html#squeeze()">squeeze</a>, <a href="BartNDArray.html#subtract(byte)">subtract</a>, <a href="BartNDArray.html#subtract(double)">subtract</a>, <a href="BartNDArray.html#subtract(float)">subtract</a>, <a href="BartNDArray.html#subtract(int)">subtract</a>, <a href="BartNDArray.html#subtract(long)">subtract</a>, <a href="BartNDArray.html#subtract(short)">subtract</a>, <a href="BartNDArray.html#subtract(io.github.hakkelt.ndarrays.NDArray)">subtract</a>, <a href="BartNDArray.html#subtract(java.lang.Object...)">subtract</a>, <a href="BartNDArray.html#subtractInplace(byte)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(double)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(float)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(int)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(long)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(short)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(io.github.hakkelt.ndarrays.NDArray)">subtractInplace</a>, <a href="BartNDArray.html#subtractInplace(java.lang.Object...)">subtractInplace</a>, <a href="BartNDArray.html#sum(int...)">sum</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.io.github.hakkelt.ndarrays.ComplexNDArray">
@@ -508,24 +485,6 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.nio.ByteBuffer,int...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>BartComplexFloatNDArray</h4>
-<pre>public&nbsp;BartComplexFloatNDArray&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a>&nbsp;buffer,
-                               int...&nbsp;dims)</pre>
-<div class="block">Wrapper constructor.
- 
- Please note that changes to this wrapper will be reflected in the wrapped buffer and vice versa.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>buffer</code> - ByteBuffer to be wrapped</dd>
-<dd><code>dims</code> - shape of the BartNDArray to be created</dd>
-</dl>
-</li>
-</ul>
 <a id="&lt;init&gt;(io.github.hakkelt.ndarrays.NDArray)">
 <!--   -->
 </a>
@@ -566,24 +525,6 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="of(java.nio.ByteBuffer,int...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>of</h4>
-<pre class="methodSignature">public static&nbsp;<a href="BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a>&nbsp;of&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a>&nbsp;source,
-                                         int...&nbsp;dims)</pre>
-<div class="block">Factory method that creates a new NDArray and copies all values from the supplied source.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - ByteBuffer from which values are read from</dd>
-<dd><code>dims</code> - shape of the BartNDArray to be created</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a BartNDArray of size dims filled with values from source ByteBuffer</dd>
-</dl>
-</li>
-</ul>
 <a id="of(float...)">
 <!--   -->
 </a>
@@ -923,24 +864,6 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 <pre class="methodSignature">public static&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Collector.html?is-external=true" title="class or interface in java.util.stream" class="externalLink">Collector</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>,&#8203;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html?is-external=true" title="class or interface in java.util" class="externalLink">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>&gt;,&#8203;io.github.hakkelt.ndarrays.NDArray&lt;org.apache.commons.math3.complex.Complex&gt;&gt;&nbsp;getCollector&#8203;(int...&nbsp;dims)</pre>
 </li>
 </ul>
-<a id="getByteBuffer()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getByteBuffer</h4>
-<pre class="methodSignature">public&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">ByteBuffer</a>&nbsp;getByteBuffer()</pre>
-</li>
-</ul>
-<a id="getFloatBuffer()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getFloatBuffer</h4>
-<pre class="methodSignature">public&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/FloatBuffer.html?is-external=true" title="class or interface in java.nio" class="externalLink">FloatBuffer</a>&nbsp;getFloatBuffer()</pre>
-</li>
-</ul>
 <a id="areBartDimsSpecified()">
 <!--   -->
 </a>
@@ -1198,7 +1121,7 @@ implements <a href="BartNDArray.html" title="interface in io.github.hakkelt.bart
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
-<p class="legalCopy"><small>Copyright &#169; 2021. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright © Tamás Hakkel. Licensed under BSD 3-Clause "New" or "Revised" License</small></p>
 </footer>
 </body>
 </html>

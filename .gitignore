@@ -8,3 +8,8 @@ target
 # VS Code specific stuff
 .vscode
 .settings
+
+# Eclipse
+.factorypath
+.classpath
+.project

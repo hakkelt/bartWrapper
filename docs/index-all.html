@@ -188,13 +188,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Driver for BART</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#BART_FATAL">BART_FATAL</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#BART_UNSUCCESSFUL">BART_UNSUCCESSFUL</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper"><span class="typeNameLink">BartComplexFloatNDArray</span></a> - Class in <a href="io/github/hakkelt/bartwrapper/package-summary.html">io.github.hakkelt.bartwrapper</a></dt>
 <dd>
-<div class="block">Reference implementation for the NDArray of float (single-precision, 32 bit floating point) values.</div>
+<div class="block">Implementation for the NDArray of float (single-precision, 32 bit floating point) values
+ that is compatible with arrays expected by BART.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#%3Cinit%3E(int...)">BartComplexFloatNDArray(int...)</a></span> - Constructor for class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
 <dd>
@@ -207,10 +206,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#%3Cinit%3E(io.github.hakkelt.ndarrays.NDArray,io.github.hakkelt.ndarrays.NDArray)">BartComplexFloatNDArray(NDArray&lt;? extends Number&gt;, NDArray&lt;? extends Number&gt;)</a></span> - Constructor for class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
 <dd>
 <div class="block">Copy constructor.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#%3Cinit%3E(java.nio.ByteBuffer,int...)">BartComplexFloatNDArray(ByteBuffer, int...)</a></span> - Constructor for class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
-<dd>
-<div class="block">Wrapper constructor.</div>
 </dd>
 <dt><a href="io/github/hakkelt/bartwrapper/BartDimsEnum.html" title="enum in io.github.hakkelt.bartwrapper"><span class="typeNameLink">BartDimsEnum</span></a> - Enum in <a href="io/github/hakkelt/bartwrapper/package-summary.html">io.github.hakkelt.bartwrapper</a></dt>
 <dd>
@@ -390,6 +385,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  
  </div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#execute(java.util.function.Consumer,java.lang.Object...)">execute(Consumer&lt;String&gt;, Object...)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
+<dd>
+<div class="block">Execute a BART command
+ 
+ <b>Example:</b>
+ 
+ </div>
+</dd>
 </dl>
 <a id="I:F">
 <!--   -->
@@ -446,11 +449,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArraySliceView.html#getBartDims()">getBartDims()</a></span> - Method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArraySliceView.html" title="class in io.github.hakkelt.bartwrapper">BartNDArraySliceView</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#getByteBuffer()">getByteBuffer()</a></span> - Method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#getCollector(int...)">getCollector(int...)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#getFloatBuffer()">getFloatBuffer()</a></span> - Method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#getImagUnchecked(int)">getImagUnchecked(int)</a></span> - Method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
 <dd>&nbsp;</dd>
@@ -484,28 +483,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">I</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#init()">init()</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#INPUT_UNSUPPORTED_TYPE">INPUT_UNSUPPORTED_TYPE</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#inverseMask(io.github.hakkelt.ndarrays.NDArray)">inverseMask(NDArray&lt;?&gt;)</a></span> - Method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/github/hakkelt/bartwrapper/package-summary.html">io.github.hakkelt.bartwrapper</a> - package io.github.hakkelt.bartwrapper</dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#isMemoryFileRegistered(java.lang.String)">isMemoryFileRegistered(String)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>
-<div class="block">Check if a name is already registered for an input or an output.</div>
-</dd>
 </dl>
 <a id="I:L">
 <!--   -->
 </a>
 <h2 class="title">L</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#loadMemory(java.lang.String)">loadMemory(String)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>
-<div class="block">Load data from an in-memory BART file.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#load(java.io.File)">load(File)</a></span> - Static method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#LOAD_FILE_UNSUPPORTED_FORMAT">LOAD_FILE_UNSUPPORTED_FORMAT</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:M">
 <!--   -->
@@ -564,7 +557,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">N</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#NAME_EXTENSION_IS_NOT_MEM">NAME_EXTENSION_IS_NOT_MEM</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#NAME_EXTENSION_IS_NOT_RA">NAME_EXTENSION_IS_NOT_RA</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:O">
@@ -628,10 +621,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Factory method that creates a BartNDArray from two multi-dimensional arrays of numeric values.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html#of(java.nio.ByteBuffer,int...)">of(ByteBuffer, int...)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></dt>
-<dd>
-<div class="block">Factory method that creates a new NDArray and copies all values from the supplied source.</div>
-</dd>
 </dl>
 <a id="I:P">
 <!--   -->
@@ -640,9 +629,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#permuteDims(int...)">permuteDims(int...)</a></span> - Method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#prepareToPassToBackend()">prepareToPassToBackend()</a></span> - Method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#prepareToSave(io.github.hakkelt.bartwrapper.BartNDArray)">prepareToSave(BartNDArray)</a></span> - Static method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
 <dd>
-<div class="block">Permutes and reshapes the array according to the meaning of dimensions in BART.</div>
+<div class="block">Permutes and reshapes the array according to the meaning of dimensions in BART and writes to disk.</div>
 </dd>
 </dl>
 <a id="I:R">
@@ -658,19 +647,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  
  </div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#registerInput(java.lang.String,io.github.hakkelt.ndarrays.NDArray)">registerInput(String, NDArray&lt;?&gt;)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>
-<div class="block">Register an NDArray to allow BART to use them as input.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#registerOutput(java.lang.String)">registerOutput(String)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>
-<div class="block">Register an name to be used as output of a later BART command.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#reshape(int...)">reshape(int...)</a></span> - Method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#run(java.lang.Object...)">run(Object...)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
 <dd>
 <div class="block">Executes a BART command and reads its output to an NDArray</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#run(java.util.function.Consumer,java.lang.Object...)">run(Consumer&lt;String&gt;, Object...)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
+<dd>
+<div class="block">Executes a BART command and reads its output to an NDArray.</div>
 </dd>
 </dl>
 <a id="I:S">
@@ -678,6 +663,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">S</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#save(io.github.hakkelt.ndarrays.NDArray,java.io.File)">save(NDArray&lt;?&gt;, File)</a></span> - Static method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#saveToTemp(io.github.hakkelt.ndarrays.NDArray)">saveToTemp(NDArray&lt;?&gt;)</a></span> - Static method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartNDArray.html#selectAndReorderBartDims(io.github.hakkelt.bartwrapper.BartDimsEnum...)">selectAndReorderBartDims(BartDimsEnum...)</a></span> - Method in interface io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></dt>
 <dd>
 <div class="block">Returns a view that references this BartNDArray as parent,
@@ -762,10 +751,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/BartErrors.html#UNINITIALIZED_BART_DIMS">UNINITIALIZED_BART_DIMS</a></span> - Static variable in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/BartErrors.html" title="class in io.github.hakkelt.bartwrapper">BartErrors</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/github/hakkelt/bartwrapper/Bart.html#unregisterInput(java.lang.String)">unregisterInput(String)</a></span> - Static method in class io.github.hakkelt.bartwrapper.<a href="io/github/hakkelt/bartwrapper/Bart.html" title="class in io.github.hakkelt.bartwrapper">Bart</a></dt>
-<dd>
-<div class="block">Deletes a registered NDArray from BART's internal memory.</div>
-</dd>
 </dl>
 <a id="I:V">
 <!--   -->
@@ -898,7 +883,7 @@ the order they are declared.</div>
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
-<p class="legalCopy"><small>Copyright &#169; 2021. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright © Tamás Hakkel. Licensed under BSD 3-Clause "New" or "Revised" License</small></p>
 </footer>
 </body>
 </html>

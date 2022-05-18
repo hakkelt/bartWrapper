@@ -14,30 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <id>snapshots</id>
-            <url>http://10.2.0.125:8081/artifactory/libs-snapshot-local</url>
-        </snapshotRepository>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <id>central</id>
-            <url>http://10.2.0.125:8081/artifactory/libs-release-local</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
         <dependency>
             <groupId>io.github.hakkelt</groupId>
             <artifactId>ndarrays</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -62,11 +43,9 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>*.lib</exclude>
-                    <exclude>*.a</exclude>
-                    <exclude>*.so</exclude>
-                </excludes>
+                <includes>
+                    <include>*.exe</include>
+                </includes>
                 <filtering>false</filtering>
             </resource>
         </resources>
@@ -150,6 +129,9 @@
                     <destDir>docs</destDir>
                     <show>public</show>
                     <notimestamp>true</notimestamp>
+                    <bottom>
+                        Copyright © Tamás Hakkel. Licensed under BSD 3-Clause "New" or "Revised" License
+                    </bottom>
                 </configuration>
                 <executions>
                     <execution>

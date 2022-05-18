@@ -1,14 +1,8 @@
 package io.github.hakkelt.bartwrapper;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.Test;
@@ -727,35 +721,6 @@ class TestComplexFloatNDArrayConstructors implements NameTrait {
                     else
                         assertEquals(array1.get(i, j, k).doubleValue(), array2.get(i, j, k).getReal());
                 }
-    }
-
-    @Test
-    void testWrapperConstructorWrongByteOrder() {
-        ByteBuffer buffer = ByteBuffer.allocateDirect(50 * Float.BYTES * 2);
-        buffer.order(ByteOrder.BIG_ENDIAN);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartComplexFloatNDArray(buffer, 50));
-        assertEquals(BartErrors.BYTE_ORDER_IS_NOT_LITTLE_ENDIAN, exception.getMessage());
-    }
-
-    @Test
-    void testWrapperConstructorNotDirect() {
-        ByteBuffer buffer = ByteBuffer.allocate(50 * Float.BYTES * 2);
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> new BartComplexFloatNDArray(buffer, 50));
-        assertEquals(BartErrors.BYTE_BUFFER_IS_NOT_DIRECT, exception.getMessage());
-    }
-
-    @Test
-    void testWrapperConstructorVsFactoryMethod() {
-        ByteBuffer buffer = ByteBuffer.allocateDirect(50 * Float.BYTES * 2);
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        BartComplexFloatNDArray array1 = new BartComplexFloatNDArray(buffer, 50);
-        BartComplexFloatNDArray array2 = BartComplexFloatNDArray.of(buffer, 50);
-        array1.forEachWithLinearIndices((value, index) -> assertEquals(value, array2.get(index)));
-        array2.set(5, 0);
-        assertNotEquals(array1.get(0), array2.get(0));
-        assertSame(buffer, array1.getByteBuffer());
-        assertNotSame(buffer, array2.getByteBuffer());
     }
 
     @Test

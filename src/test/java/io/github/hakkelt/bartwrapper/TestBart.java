@@ -4,22 +4,18 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.github.hakkelt.ndarrays.ComplexNDArray;
 import io.github.hakkelt.ndarrays.NDArray;
-import io.github.hakkelt.ndarrays.basic.BasicComplexFloatNDArray;
 import io.github.hakkelt.ndarrays.basic.BasicFloatNDArray;
 
 class TestBart {
@@ -47,23 +43,36 @@ class TestBart {
     @Test
     void testReadError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> Bart.read("cabs", "asdf"));
-        assertEquals(BartErrors.BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(String.format(BartErrors.BART_UNSUCCESSFUL,
+            "Usage: cabs <input> <output> " + System.lineSeparator() +
+            "ERROR: cmdline: too few or too many arguments"),
+            exception.getMessage());
     }
     
     @Test
     void testExecute() throws BartException {
         assertDoesNotThrow(() -> Bart.execute("bitmask", "-b", 7));
     }
+    
+    @Test
+    void testExecuteWithOutputConsumer() throws BartException {
+        StringBuilder str = new StringBuilder();
+        Bart.execute(line -> str.append(line), "bitmask", "-b", 7);
+        assertEquals("0 1 2", str.toString());
+    }
 
     @Test
-    void testExecuteArrayInput() throws BartException {
+    void testExecuteArrayInput() throws BartException, InterruptedException, IOException {
         assertDoesNotThrow(() -> Bart.execute("estdims", array));
     }
 
     @Test
     void testExecuteError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> Bart.execute("cabs", "asdf"));
-        assertEquals(BartErrors.BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(String.format(BartErrors.BART_UNSUCCESSFUL, 
+            "Usage: cabs <input> <output> " + System.lineSeparator() +
+            "ERROR: cmdline: too few or too many arguments"),
+            exception.getMessage());
     }
 
     @Test
@@ -76,7 +85,10 @@ class TestBart {
     @Test
     void testRunError() throws BartException {
         Exception exception = assertThrows(BartException.class, () -> Bart.run("cabs", "asdf"));
-        assertEquals(BartErrors.BART_UNSUCCESSFUL, exception.getMessage());
+        assertEquals(String.format(BartErrors.BART_UNSUCCESSFUL,
+            "Loading cfl file asdf" + System.lineSeparator() +
+            " : No such file or directory" + System.lineSeparator() +
+            "ERROR:"), exception.getMessage());
     }
 
     @Test
@@ -169,34 +181,10 @@ class TestBart {
     }
 
     @Test
-    void testRegisterLoadUnregister() throws BartException {
-        assertDoesNotThrow(() -> Bart.registerInput("input.mem", array));
-        assertDoesNotThrow(() -> Bart.registerInput("input.mem", array.slice(1, ":")));
-        assertDoesNotThrow(() -> Bart.registerInput("input.mem", new BasicComplexFloatNDArray(array)));
-        assertDoesNotThrow(() -> Bart.registerOutput("output.mem"));
-        assertFalse(Bart.isMemoryFileRegistered("output.mem"));
-        assertDoesNotThrow(() -> Bart.execute("cabs", "input.mem", "output.mem"));
-        assertTrue(Bart.isMemoryFileRegistered("input.mem"));
-        assertTrue(Bart.isMemoryFileRegistered("output.mem"));
-        List<ComplexNDArray<Float>> result = new ArrayList<ComplexNDArray<Float>>();
-        assertDoesNotThrow(() -> result.add(Bart.loadMemory("output.mem")));
-        assertDoesNotThrow(() -> Bart.unregisterInput("input.mem"));
-        assertDoesNotThrow(() -> Bart.unregisterInput("output.mem"));
-        assertEquals(array.abs(), result.get(0).squeeze().real());
-    }
-
-    @Test
-    void testRegisterMemoryNotMemExtension() throws BartException {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> Bart.registerInput("input.memo", array));
-        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_MEM, exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class, () -> Bart.registerOutput("output"));
-        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_MEM, exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class, () -> Bart.isMemoryFileRegistered("output.me"));
-        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_MEM, exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class, () -> Bart.loadMemory("output.mim"));
-        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_MEM, exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class, () -> Bart.unregisterInput("input.meme"));
-        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_MEM, exception.getMessage());
+    void testRegisterMemoryNotRaExtension() throws BartException {
+        File file = new File("input.memo");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> BartNDArray.save(array, file));
+        assertEquals(BartErrors.NAME_EXTENSION_IS_NOT_RA, exception.getMessage());
     }
 
     @Test

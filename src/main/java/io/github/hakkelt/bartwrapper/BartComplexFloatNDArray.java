@@ -1,8 +1,5 @@
 package io.github.hakkelt.bartwrapper;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -23,13 +20,13 @@ import io.github.hakkelt.ndarrays.internal.ComplexNDArrayCollector;
 import org.apache.commons.math3.complex.Complex;
 
 /**
- * Reference implementation for the NDArray of float (single-precision, 32 bit floating point) values.
+ * Implementation for the NDArray of float (single-precision, 32 bit floating point) values
+ * that is compatible with arrays expected by BART. It also contains some utility functions to
+ * help dealing with the 16 dimensions used by BART.
  */
 public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> implements BartNDArray {
-    protected ByteBuffer byteBuffer;
-    protected FloatBuffer floatBuffer;
+    protected float[] data;
     protected BartDimsEnum[] bartDims = null;
-
 
     protected BartComplexFloatNDArray() {}
 
@@ -40,27 +37,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
      */
     public BartComplexFloatNDArray(int... dims) {
         baseConstuctor(dims);
-        byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
-        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        floatBuffer = byteBuffer.asFloatBuffer();
-    }
-
-    /**
-     * Wrapper constructor.
-     * 
-     * Please note that changes to this wrapper will be reflected in the wrapped buffer and vice versa.
-     * 
-     * @param buffer ByteBuffer to be wrapped
-     * @param dims shape of the BartNDArray to be created
-     */
-    public BartComplexFloatNDArray(ByteBuffer buffer, int... dims) {
-        baseConstuctor(dims);
-        byteBuffer = buffer;
-        if (byteBuffer.order() != ByteOrder.LITTLE_ENDIAN)
-            throw new IllegalArgumentException(BartErrors.BYTE_ORDER_IS_NOT_LITTLE_ENDIAN);
-        if (!byteBuffer.isDirect())
-            throw new IllegalArgumentException(BartErrors.BYTE_BUFFER_IS_NOT_DIRECT);
-        floatBuffer = byteBuffer.asFloatBuffer();
+        this.data = new float[length() * 2];
     }
 
     /**
@@ -70,9 +47,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
      */
     public BartComplexFloatNDArray(NDArray<?> array) {
         baseConstuctor(array.shape());
-        byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
-        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        floatBuffer = byteBuffer.asFloatBuffer();
+        this.data = new float[length() * 2];
         copyFrom(array);
         if (array instanceof BartNDArray && ((BartNDArray)array).areBartDimsSpecified())
             bartDims = ((BartNDArray)array).getBartDims();
@@ -86,21 +61,8 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
      */
     public BartComplexFloatNDArray(NDArray<? extends Number> real, NDArray<? extends Number> imag) {
         baseConstuctor(real.shape());
-        byteBuffer = ByteBuffer.allocateDirect(dataLength * Float.BYTES * 2);
-        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        floatBuffer = byteBuffer.asFloatBuffer();
+        this.data = new float[length() * 2];
         copyFrom(real, imag);
-    }
-
-    /**
-     * Factory method that creates a new NDArray and copies all values from the supplied source.
-     * 
-     * @param source ByteBuffer from which values are read from
-     * @param dims shape of the BartNDArray to be created
-     * @return a BartNDArray of size dims filled with values from source ByteBuffer
-     */
-    public static BartComplexFloatNDArray of(ByteBuffer source, int... dims) {
-        return (BartComplexFloatNDArray)new BartComplexFloatNDArray(source, dims).copy();
     }
 
     /**
@@ -254,15 +216,10 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
     @Override
     public BartComplexFloatNDArray copyFrom(NDArray<?> array) {
         if (array instanceof BartComplexFloatNDArray) {
-            byteBuffer.rewind().put(((BartComplexFloatNDArray)array).byteBuffer.rewind());
-            if (((BartComplexFloatNDArray)array).bartDims != null)
-                bartDims = ((BartComplexFloatNDArray)array).bartDims.clone();
-        } else if (array instanceof BartNDArrayReshapeView &&
-                ((BartNDArrayReshapeView)array).getParent() instanceof BartComplexFloatNDArray) {
-            byteBuffer.rewind().put(((BartComplexFloatNDArray)((BartNDArrayReshapeView)array).getParent()).byteBuffer.rewind());
-        } else {
+            NDArrayUtils.checkShapeCompatibility(this, array.shape());
+            data = ((BartComplexFloatNDArray) array).data.clone();
+        } else
             super.copyFrom(array);
-        }
         return this;
     }
 
@@ -278,7 +235,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
 
     @Override
     public Float getRealUnchecked(int linearIndex) {
-        return floatBuffer.get(linearIndex * 2);
+        return data[linearIndex * 2];
     }
 
     @Override
@@ -288,7 +245,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
 
     @Override
     public Float getImagUnchecked(int linearIndex) {
-        return floatBuffer.get(linearIndex * 2 + 1);
+        return data[linearIndex * 2 + 1];
     }
 
     @Override
@@ -319,7 +276,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
 
     @Override
     protected void setRealUnchecked(Float value, int linearIndex) {
-        floatBuffer.put(linearIndex * 2, value);
+        data[linearIndex * 2] = value;
     }
 
     @Override
@@ -329,7 +286,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
 
     @Override
     protected void setImagUnchecked(Float value, int linearIndex) {
-        floatBuffer.put(linearIndex * 2 + 1, value);
+        data[linearIndex * 2 + 1] = value;
     }
 
     @Override
@@ -339,14 +296,6 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
 
     public static Collector<Object, List<Object>, NDArray<Complex>> getCollector(int... dims) {
         return new ComplexNDArrayCollector<>(new BartComplexFloatNDArray(dims));
-    }
-
-    public ByteBuffer getByteBuffer() {
-        return byteBuffer;
-    }
-
-    public FloatBuffer getFloatBuffer() {
-        return floatBuffer;
     }
 
     public boolean areBartDimsSpecified() {
@@ -394,7 +343,7 @@ public class BartComplexFloatNDArray extends AbstractComplexNDArray<Float> imple
         if (!(obj instanceof BartNDArray) && areBartDimsSpecified())
             return false;
         if (obj instanceof BartComplexFloatNDArray)
-            return ((BartComplexFloatNDArray)obj).byteBuffer.rewind().equals(byteBuffer.rewind());
+            return Arrays.equals(data, ((BartComplexFloatNDArray) obj).data);
         return super.equals(obj);
     }
 

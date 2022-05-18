@@ -16,14 +16,13 @@ public class BartErrors {
         "The byte order of the supplied ByteBuffer is big endian, but should be little endian!";
     public static final String BYTE_BUFFER_IS_NOT_DIRECT =
         "The the supplied ByteBuffer is not directly allocated!";
-
-    public static final String BART_FATAL =
-        "Fatal error occured while trying to run BART.";
     public static final String BART_UNSUCCESSFUL =
-        "Running BART was unsuccessful.";
+        "Running BART was unsuccessful.%n%s";
     public static final String INPUT_UNSUPPORTED_TYPE =
         "Cannot pass variable %s of type %s to BART!";
-    public static final String NAME_EXTENSION_IS_NOT_MEM =
-        "Name of array must end with '.mem'!";
+    public static final String NAME_EXTENSION_IS_NOT_RA =
+        "The extension of the file must be '.ra'!";
+    public static final String LOAD_FILE_UNSUPPORTED_FORMAT =
+        "Cannot load file %s: unsupported format.";
 
 }

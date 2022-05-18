@@ -115,7 +115,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../BartComplexFloatNDArray.html" title="class in io.github.hakkelt.bartwrapper">BartComplexFloatNDArray</a></span></code></th>
 <td class="colLast">
-<div class="block">Reference implementation for the NDArray of float (single-precision, 32 bit floating point) values.</div>
+<div class="block">Implementation for the NDArray of float (single-precision, 32 bit floating point) values
+ that is compatible with arrays expected by BART.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -641,131 +642,131 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">Bart.</span><code><span class="memberNameLink"><a href="../Bart.html#loadMemory(java.lang.String)">loadMemory</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">Load data from an in-memory BART file.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#map(java.util.function.UnaryOperator)">map</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/UnaryOperator.html?is-external=true" title="class or interface in java.util.function" class="externalLink">UnaryOperator</a>&lt;org.apache.commons.math3.complex.Complex&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#mapWithCartesianIndices(java.util.function.BiFunction)">mapWithCartesianIndices</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function" class="externalLink">BiFunction</a>&lt;org.apache.commons.math3.complex.Complex,&#8203;int[],&#8203;org.apache.commons.math3.complex.Complex&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#mapWithLinearIndices(java.util.function.BiFunction)">mapWithLinearIndices</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function" class="externalLink">BiFunction</a>&lt;org.apache.commons.math3.complex.Complex,&#8203;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>,&#8203;org.apache.commons.math3.complex.Complex&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#mask(io.github.hakkelt.ndarrays.NDArray)">mask</a></span>&#8203;(io.github.hakkelt.ndarrays.NDArray&lt;?&gt;&nbsp;mask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#mask(java.util.function.Predicate)">mask</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function" class="externalLink">Predicate</a>&lt;org.apache.commons.math3.complex.Complex&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#maskWithCartesianIndices(java.util.function.BiPredicate)">maskWithCartesianIndices</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiPredicate.html?is-external=true" title="class or interface in java.util.function" class="externalLink">BiPredicate</a>&lt;org.apache.commons.math3.complex.Complex,&#8203;int[]&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#maskWithLinearIndices(java.util.function.BiPredicate)">maskWithLinearIndices</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/BiPredicate.html?is-external=true" title="class or interface in java.util.function" class="externalLink">BiPredicate</a>&lt;org.apache.commons.math3.complex.Complex,&#8203;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&gt;&nbsp;func)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(byte)">multiply</a></span>&#8203;(byte&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(double)">multiply</a></span>&#8203;(double&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(float)">multiply</a></span>&#8203;(float&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(int)">multiply</a></span>&#8203;(int&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(long)">multiply</a></span>&#8203;(long&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(short)">multiply</a></span>&#8203;(short&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(io.github.hakkelt.ndarrays.NDArray)">multiply</a></span>&#8203;(io.github.hakkelt.ndarrays.NDArray&lt;?&gt;&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiply(java.lang.Object...)">multiply</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;multiplicands)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(byte)">multiplyInplace</a></span>&#8203;(byte&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(double)">multiplyInplace</a></span>&#8203;(double&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(float)">multiplyInplace</a></span>&#8203;(float&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(int)">multiplyInplace</a></span>&#8203;(int&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(long)">multiplyInplace</a></span>&#8203;(long&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(short)">multiplyInplace</a></span>&#8203;(short&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(io.github.hakkelt.ndarrays.NDArray)">multiplyInplace</a></span>&#8203;(io.github.hakkelt.ndarrays.NDArray&lt;?&gt;&nbsp;multiplicand)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#multiplyInplace(java.lang.Object...)">multiplyInplace</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;multiplicands)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#permuteDims(int...)">permuteDims</a></span>&#8203;(int...&nbsp;permutation)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#prepareToSave(io.github.hakkelt.bartwrapper.BartNDArray)">prepareToSave</a></span>&#8203;(<a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a>&nbsp;array)</code></th>
+<td class="colLast">
+<div class="block">Permutes and reshapes the array according to the meaning of dimensions in BART and writes to disk.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
@@ -780,6 +781,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Bart.</span><code><span class="memberNameLink"><a href="../Bart.html#run(java.util.function.Consumer,java.lang.Object...)">run</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function" class="externalLink">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&gt;&nbsp;outputConsumer,
+   <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;args)</code></th>
+<td class="colLast">
+<div class="block">Executes a BART command and reads its output to an NDArray.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#selectAndReorderBartDims(io.github.hakkelt.bartwrapper.BartDimsEnum...)">selectAndReorderBartDims</a></span>&#8203;(<a href="../BartDimsEnum.html" title="enum in io.github.hakkelt.bartwrapper">BartDimsEnum</a>...&nbsp;selectedDims)</code></th>
 <td class="colLast">
@@ -788,135 +797,152 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  and then changes the order of dimensions to match the order of dimensions in the parameter list.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#selectDims(int...)">selectDims</a></span>&#8203;(int...&nbsp;selectedDims)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartComplexFloatNDArray.</span><code><span class="memberNameLink"><a href="../BartComplexFloatNDArray.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArrayMaskView.</span><code><span class="memberNameLink"><a href="../BartNDArrayMaskView.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArrayPermuteDimsView.</span><code><span class="memberNameLink"><a href="../BartNDArrayPermuteDimsView.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArrayReshapeView.</span><code><span class="memberNameLink"><a href="../BartNDArrayReshapeView.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArraySliceView.</span><code><span class="memberNameLink"><a href="../BartNDArraySliceView.html#similar()">similar</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#slice(java.lang.Object...)">slice</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;slicingExpressions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#squeeze()">squeeze</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(byte)">subtract</a></span>&#8203;(byte&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(double)">subtract</a></span>&#8203;(double&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(float)">subtract</a></span>&#8203;(float&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(int)">subtract</a></span>&#8203;(int&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(long)">subtract</a></span>&#8203;(long&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(short)">subtract</a></span>&#8203;(short&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(io.github.hakkelt.ndarrays.NDArray)">subtract</a></span>&#8203;(io.github.hakkelt.ndarrays.NDArray&lt;?&gt;&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtract(java.lang.Object...)">subtract</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;substrahends)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(byte)">subtractInplace</a></span>&#8203;(byte&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(double)">subtractInplace</a></span>&#8203;(double&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(float)">subtractInplace</a></span>&#8203;(float&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(int)">subtractInplace</a></span>&#8203;(int&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(long)">subtractInplace</a></span>&#8203;(long&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(short)">subtractInplace</a></span>&#8203;(short&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(io.github.hakkelt.ndarrays.NDArray)">subtractInplace</a></span>&#8203;(io.github.hakkelt.ndarrays.NDArray&lt;?&gt;&nbsp;substrahend)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#subtractInplace(java.lang.Object...)">subtractInplace</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html?is-external=true" title="class or interface in java.lang" class="externalLink">Object</a>...&nbsp;substrahends)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#sum(int...)">sum</a></span>&#8203;(int...&nbsp;selectedDims)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">io.github.hakkelt.bartwrapper</a> with parameters of type <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">BartNDArray.</span><code><span class="memberNameLink"><a href="../BartNDArray.html#prepareToSave(io.github.hakkelt.bartwrapper.BartNDArray)">prepareToSave</a></span>&#8203;(<a href="../BartNDArray.html" title="interface in io.github.hakkelt.bartwrapper">BartNDArray</a>&nbsp;array)</code></th>
+<td class="colLast">
+<div class="block">Permutes and reshapes the array according to the meaning of dimensions in BART and writes to disk.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1012,7 +1038,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 </nav>
-<p class="legalCopy"><small>Copyright &#169; 2021. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright © Tamás Hakkel. Licensed under BSD 3-Clause "New" or "Revised" License</small></p>
 </footer>
 </body>
 </html>

@@ -1,5 +1,15 @@
 package io.github.hakkelt.bartwrapper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,16 +22,17 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.apache.commons.math3.complex.Complex;
 
-import io.github.hakkelt.ndarrays.internal.ArrayOperations;
 import io.github.hakkelt.ndarrays.ComplexNDArray;
-import io.github.hakkelt.ndarrays.internal.CopyFromOperations;
-import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.Range;
+import io.github.hakkelt.ndarrays.internal.ArrayOperations;
+import io.github.hakkelt.ndarrays.internal.CopyFromOperations;
+import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.internal.ViewOperations;
 
 public interface BartNDArray extends ComplexNDArray<Float> {
@@ -743,18 +754,118 @@ assertEquals(128, array2.shape(1));
      */
     public void setBartDims(BartDimsEnum... bartDims);
 
+    public static BartComplexFloatNDArray load(File file) throws IOException {
+        if (!file.isFile())
+            throw new IllegalArgumentException(file.getName() + " is not a file!");
+        if (!file.getName().endsWith(".ra"))
+            throw new IllegalArgumentException("The extension of the file must be '.ra'!");
+        final String IDENTIFIER_STRING = "rawarray";
+        try (InputStream stream = new FileInputStream(file)) {
+            ByteBuffer buffer = ByteBuffer.wrap(stream.readAllBytes());
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+            int[] shape = readHeader(file, IDENTIFIER_STRING, buffer);
+            BartComplexFloatNDArray array = new BartComplexFloatNDArray(shape);
+            readComplexFromFile(buffer.asFloatBuffer(), array);
+            return array;
+        }
+    }
+
+    private static int[] readHeader(File file, final String IDENTIFIER_STRING, ByteBuffer buffer) {
+        byte[] identifier = new byte[8];
+        buffer.get(identifier);
+        if (!Arrays.equals(IDENTIFIER_STRING.getBytes(StandardCharsets.US_ASCII), identifier))
+            throw new IllegalArgumentException(Errors.READ_FROM_FILE_WRONG_FILE_IDENTIFIER);
+        if (buffer.getLong() != 0) // flags
+            throw new IllegalArgumentException(
+                String.format(BartErrors.LOAD_FILE_UNSUPPORTED_FORMAT, file.getName()));
+        if (buffer.getLong() != 4) // RA_TYPE_COMPLEX
+            throw new IllegalArgumentException(
+                String.format(BartErrors.LOAD_FILE_UNSUPPORTED_FORMAT, file.getName()));
+        if (buffer.getLong() != Float.BYTES * 2l) // elbyte (number of bytes for a single entry)
+            throw new IllegalArgumentException(
+                String.format(BartErrors.LOAD_FILE_UNSUPPORTED_FORMAT, file.getName()));
+        long size = buffer.getLong() / (Float.BYTES * 2l);
+        long ndim = buffer.getLong();
+        int[] shape = LongStream.range(0, ndim).mapToInt(i -> (int) buffer.getLong()).toArray();
+        if (IntStream.of(shape).reduce(1, (a,b) -> a * b) != size)
+            throw new IllegalArgumentException(
+                String.format(BartErrors.LOAD_FILE_UNSUPPORTED_FORMAT, file.getName()));
+        return shape;
+    }
+
+    private static void readComplexFromFile(FloatBuffer buffer, BartComplexFloatNDArray array) {
+        if (buffer.remaining() != array.length() * 2)
+            throw new IllegalStateException();
+        array.streamLinearIndices().forEach(i -> {
+            array.setReal(buffer.get(), i);
+            array.setImag(buffer.get(), i);
+        });
+    }
+
+    public static File saveToTemp(NDArray<?> array) throws IOException {
+        File file = File.createTempFile("bart_", ".ra");
+        save(array, file);
+        return file;
+    }
+
+    public static void save(NDArray<?> array, File file) throws IOException {
+        if (array instanceof BartNDArray)
+            array = prepareToSave((BartNDArray) array);
+        if (!file.getName().endsWith(".ra"))
+            throw new IllegalArgumentException(BartErrors.NAME_EXTENSION_IS_NOT_RA);
+        try(OutputStream stream = new FileOutputStream(file)) {
+            ByteBuffer buffer = ByteBuffer.allocate(calculateBufferSize(array));
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+            writeFileHeader(buffer, array);
+            if (array.dtype() == Complex.class) {
+                ((ComplexNDArray<?>) array).stream().forEachOrdered(value -> {
+                    buffer.putFloat((float) value.getReal());
+                    buffer.putFloat((float) value.getImaginary());
+                });
+            } else {
+                array.stream().forEachOrdered(value -> {
+                    buffer.putFloat(((Number) value).floatValue());
+                    buffer.putFloat(0.f);
+                });
+            }
+            stream.write(buffer.array());
+        }
+    }
+
+    private static void writeFileHeader(ByteBuffer buffer, NDArray<?> array) {
+        final String IDENTIFIER_STRING = "rawarray";
+        buffer.put(IDENTIFIER_STRING.getBytes(StandardCharsets.US_ASCII));
+        buffer.putLong(0); // flags
+        buffer.putLong(4); // RA_TYPE_COMPLEX
+        buffer.putLong(Float.BYTES * 2l); // elbyte (number of bytes for a single entry)
+        buffer.putLong(array.length() * Float.BYTES * 2l);
+        buffer.putLong(array.ndim());
+        for (int i = 0; i < array.ndim(); i++)
+            buffer.putLong(array.shape(i));
+    }
+
+    private static int calculateBufferSize(NDArray<?> array) {
+        return 6 * Long.BYTES /* length of header: magic, flags, eltype, elbyte, size, ndims */
+            + array.ndim() * Long.BYTES
+            + array.length() * Float.BYTES * 2
+            + 1 /* EOF character */;
+    }
+
     /**
-     * Permutes and reshapes the array according to the meaning of dimensions in BART.
+     * Permutes and reshapes the array according to the meaning of dimensions in BART and writes to disk.
      * 
-     * @return Prepared BartNDArray ready to pass to JNI backend
+     * @param array BartNDArray to be saved to disk
+     * 
+     * @return Prepared BartNDArray ready to save
      */
-    public default BartComplexFloatNDArray prepareToPassToBackend() {
-        List<Integer> intBartDims = getBartDimsAsIntList();
-        int[] permutator = getBartDimsPermutator(intBartDims);
-        BartNDArray view = permuteDims(permutator);
-        int[] newShape = getBartDimsShape(intBartDims, permutator);
-        BartNDArray result = view.reshape(newShape);
-        return (BartComplexFloatNDArray) (result instanceof BartComplexFloatNDArray ? result : result.copy());
+    public static BartNDArray prepareToSave(BartNDArray array) {
+        if (!array.areBartDimsSpecified())
+            return array;
+        List<Integer> intBartDims = array.getBartDimsAsIntList();
+        int[] permutator = array.getBartDimsPermutator(intBartDims);
+        BartNDArray view = array.permuteDims(permutator);
+        int[] newShape = array.getBartDimsShape(intBartDims, permutator);
+        return view.reshape(newShape);
     }
 
     private List<Integer> getBartDimsAsIntList() {
