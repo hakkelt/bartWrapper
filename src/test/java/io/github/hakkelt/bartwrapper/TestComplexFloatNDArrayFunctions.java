@@ -7,16 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.hakkelt.ndarrays.ComplexNDArray;
-import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.basic.BasicComplexFloatNDArray;
+import io.github.hakkelt.ndarrays.internal.Errors;
 
 class TestComplexFloatNDArrayFunctions implements NameTrait {
     BartNDArray array;
@@ -375,12 +374,6 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
                     assertTrue(Math.abs(array.get(i,j,k).atan().add(i).getReal() - array2.get(i,j,k).getReal()) / array2.get(i,j,k).getReal() < 1e-6);
                     assertTrue(Math.abs(array.get(i,j,k).atan().add(i).getImaginary() - array2.get(i,j,k).getImaginary()) / array2.get(i,j,k).getImaginary() < 1e-6);
                 }
-    }
-
-    @Test
-    void testForEachSequential() {
-        AtomicInteger i = new AtomicInteger(0);
-        array.forEachSequential(value -> assertEquals(array.get(i.getAndIncrement()), value));
     }
 
     @Test

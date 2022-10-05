@@ -9,17 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.hakkelt.ndarrays.ComplexNDArray;
-import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.basic.BasicByteNDArray;
 import io.github.hakkelt.ndarrays.basic.BasicComplexFloatNDArray;
+import io.github.hakkelt.ndarrays.internal.Errors;
 
 class TestComplexFloatNDArraySlice implements NameTrait {
     BartNDArray array, slice;
@@ -419,12 +418,6 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     }
 
     @Test
-    void testForEachSequential() {
-        AtomicInteger i = new AtomicInteger(0);
-        slice.forEachSequential(value -> assertEquals(slice.get(i.getAndIncrement()), value));
-    }
-
-    @Test
     void testForEachWithLinearIndices() {
         slice.forEachWithLinearIndices((value, index) -> assertEquals(slice.get(index), value));
     }
@@ -614,18 +607,18 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     void testMaskSlice() {
         NDArray<Byte> mask = new BasicByteNDArray(slice.abs().map(value -> value > 20 ? (float)1 : (float)0));
         BartNDArray masked = slice.mask(mask);
-        masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked.forEach((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
-        slice.forEachSequential(value -> assertTrue(value.abs() <= 20));
+        slice.forEach(value -> assertTrue(value.abs() <= 20));
         assertTrue(masked.copy() instanceof BartComplexFloatNDArray);
     }
 
     @Test
     void testMaskSliceWithPredicate() {
         BartNDArray masked = slice.mask(value -> value.abs() > 20);
-        masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked.forEach((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
-        slice.forEachSequential(value -> assertTrue(value.abs() <= 20));
+        slice.forEach(value -> assertTrue(value.abs() <= 20));
     }
 
     @Test
@@ -639,7 +632,7 @@ class TestComplexFloatNDArraySlice implements NameTrait {
     @Test
     void testMaskSliceWithPredicateWithCartesianIndices() {
         BartNDArray masked = slice.maskWithCartesianIndices((value, idx) -> value.abs() > 20 && idx[0] == 0);
-        masked.forEachSequential(value -> assertTrue(value.abs() > 20));
+        masked.forEach(value -> assertTrue(value.abs() > 20));
         masked.fill(0);
         slice.forEachWithCartesianIndices((value, idx) -> assertTrue(value.abs() <= 20 || idx[0] != 0));
     }

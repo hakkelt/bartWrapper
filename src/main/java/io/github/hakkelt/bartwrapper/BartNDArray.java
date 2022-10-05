@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -33,6 +34,7 @@ import io.github.hakkelt.ndarrays.Range;
 import io.github.hakkelt.ndarrays.internal.ArrayOperations;
 import io.github.hakkelt.ndarrays.internal.CopyFromOperations;
 import io.github.hakkelt.ndarrays.internal.Errors;
+import io.github.hakkelt.ndarrays.internal.NormalizedRange;
 import io.github.hakkelt.ndarrays.internal.ViewOperations;
 
 public interface BartNDArray extends ComplexNDArray<Float> {
@@ -141,7 +143,13 @@ public interface BartNDArray extends ComplexNDArray<Float> {
     
     @Override
     public BartNDArray applyWithCartesianIndices(BiFunction<Complex, int[], Complex> func);
-    
+
+    @Override
+    public BartNDArray applyOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims);
+
+    @Override
+    public BartNDArray applyOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims);
+
     @Override
     public BartNDArray fillUsingLinearIndices(IntFunction<Complex> func);
     
@@ -167,6 +175,12 @@ public interface BartNDArray extends ComplexNDArray<Float> {
         newInstance.applyWithCartesianIndices(func);
         return newInstance;
     }
+
+    @Override
+    public BartNDArray mapOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims);
+
+    @Override
+    public BartNDArray mapOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims);
 
     @Override
     public default BartNDArray add(byte addend) {
@@ -617,9 +631,10 @@ public interface BartNDArray extends ComplexNDArray<Float> {
     
     @Override
     public default BartNDArray slice(Object... slicingExpressions) {
-        Range[] expressions = Range.parseExpressions(shape(), slicingExpressions);
-        if (ViewOperations.isThisSlicingAnIdentityOperation(this, expressions)) return this;
-        return new BartNDArraySliceView(this, expressions);
+        Range[] expressions = Range.parseExpressions(slicingExpressions);
+        NormalizedRange[] normalizedRanges = NormalizedRange.normalizeRanges(expressions, shape());
+        if (ViewOperations.isThisSlicingAnIdentityOperation(this, normalizedRanges)) return this;
+        return new BartNDArraySliceView(this, normalizedRanges);
     }
     
     @Override
@@ -797,8 +812,8 @@ assertEquals(128, array2.shape(1));
         if (buffer.remaining() != array.length() * 2)
             throw new IllegalStateException();
         array.streamLinearIndices().forEach(i -> {
-            array.setReal(buffer.get(), i);
-            array.setImag(buffer.get(), i);
+            array.setReal(buffer.get(i * 2), i);
+            array.setImag(buffer.get(i * 2 + 1), i);
         });
     }
 

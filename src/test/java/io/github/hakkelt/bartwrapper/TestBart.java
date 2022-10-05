@@ -106,7 +106,7 @@ class TestBart {
             BartDimsEnum._13_SLICE,
             BartDimsEnum._10_TIME
         };
-        BartNDArray array = new BartComplexFloatNDArray(128, 128, 20, 5)
+        BartNDArray array = new BartComplexFloatNDArray(10, 10, 2, 2)
             .fillUsingLinearIndices(i -> new Complex(i,-i));
         array.setBartDims(shapeOrder);
         assertArrayEquals(shapeOrder, array.getBartDims());
@@ -189,13 +189,14 @@ class TestBart {
 
     @Test
     void testRunChained() throws BartException {
-        NDArray<Complex> image = Bart.run("phantom", "-3").squeeze();
+        NDArray<Complex> image = new BartComplexFloatNDArray(30, 30)
+            .fillUsingCartesianIndices(idx -> new Complex(Math.abs(idx[0] - 15) < 8 && Math.abs(idx[1] - 15) < 8 ? 1 : 0));
         image.divideInplace(image.norm(Double.POSITIVE_INFINITY));
         NDArray<Complex> kspaceFull = Bart.run("fft", 7, image).squeeze();
         NDArray<Complex> image_zf = Bart.run("fft", "-i", 7, kspaceFull).squeeze();
         image_zf.divideInplace(image_zf.norm(Double.POSITIVE_INFINITY));
         NDArray<Complex> diff = image.subtract(image_zf);
-        assertTrue(diff.norm(Double.POSITIVE_INFINITY) < 1e-6);
+        assertEquals(0, diff.norm(Double.POSITIVE_INFINITY), 1e-6);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package io.github.hakkelt.bartwrapper;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -9,8 +10,9 @@ import java.util.function.UnaryOperator;
 
 import org.apache.commons.math3.complex.Complex;
 
-import io.github.hakkelt.ndarrays.internal.ComplexNDArrayMaskView;
+import io.github.hakkelt.ndarrays.ComplexNDArray;
 import io.github.hakkelt.ndarrays.NDArray;
+import io.github.hakkelt.ndarrays.internal.ComplexNDArrayMaskView;
 
 /**
  * A view for a ComplexNDArray that selects values based on a specified mask.
@@ -101,6 +103,32 @@ public class BartNDArrayMaskView extends ComplexNDArrayMaskView<Float> implement
     public BartNDArray fillUsingCartesianIndices(Function<int[], Complex> func) {
         super.fillUsingCartesianIndices(func);
         return this;
+    }
+
+    @Override
+    public BartNDArray applyOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims) {
+        super.applyOnComplexSlices(func, iterationDims);
+        return this;
+    }
+
+    @Override
+    public BartNDArray applyOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims) {
+        super.applyOnComplexSlices(func, iterationDims);
+        return this;
+    }
+    
+    @Override
+    public BartNDArray mapOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims) {
+        BartNDArray newInstance = copy();
+        newInstance.applyOnComplexSlices(func, iterationDims);
+        return newInstance;
+    }
+
+    @Override
+    public BartNDArray mapOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims) {
+        BartNDArray newInstance = copy();
+        newInstance.applyOnComplexSlices(func, iterationDims);
+        return newInstance;
     }
     
 }

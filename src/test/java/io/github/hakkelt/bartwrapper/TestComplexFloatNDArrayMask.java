@@ -8,17 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.hakkelt.ndarrays.ComplexNDArray;
-import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.basic.BasicByteNDArray;
 import io.github.hakkelt.ndarrays.basic.BasicComplexFloatNDArray;
+import io.github.hakkelt.ndarrays.internal.Errors;
 
 class TestComplexFloatNDArrayMask implements NameTrait {
     BartNDArray array, masked;
@@ -63,9 +62,9 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     @Test
     void testMaskWithPredicate() {
         BartNDArray masked = array.mask(value -> value.abs() > 20);
-        masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked.forEach((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
-        array.forEachSequential(value -> assertTrue(value.abs() <= 20));
+        array.forEach(value -> assertTrue(value.abs() <= 20));
     }
 
     @Test
@@ -79,7 +78,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     @Test
     void testMaskWithPredicateWithCartesianIndices() {
         BartNDArray masked = array.maskWithCartesianIndices((value, idx) -> value.abs() > 20 && idx[0] == 0);
-        masked.forEachSequential(value -> assertTrue(value.abs() > 20));
+        masked.forEach(value -> assertTrue(value.abs() > 20));
         masked.fill(0);
         array.forEachWithCartesianIndices((value, idx) -> assertTrue(value.abs() <= 20 || idx[0] != 0));
     }
@@ -88,11 +87,11 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     void testMaskMask() {
         NDArray<Byte> mask2 = new BasicByteNDArray(masked.abs().map(value -> value > 20 ? (float)1 : (float)0));
         BartNDArray masked2 = masked.mask(mask2);
-        masked2.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked2.forEach((value) -> assertTrue(value.abs() > 20));
         masked2 = masked.mask(value -> value.abs() > 20);
-        masked2.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked2.forEach((value) -> assertTrue(value.abs() > 20));
         masked2 = masked.maskWithLinearIndices((value, index) -> value.abs() > 20);
-        masked2.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked2.forEach((value) -> assertTrue(value.abs() > 20));
         assertTrue(masked2.copy() instanceof BartComplexFloatNDArray);
     }
 
@@ -100,7 +99,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     void testMaskInverseMask() {
         NDArray<Byte> mask2 = new BasicByteNDArray(masked.abs().map(value -> value > 20 ? (float)1 : (float)0));
         BartNDArray masked2 = masked.inverseMask(mask2);
-        masked2.forEachSequential((value) -> assertTrue(value.abs() <= 20));
+        masked2.forEach((value) -> assertTrue(value.abs() <= 20));
     }
 
     @Test
@@ -311,12 +310,6 @@ class TestComplexFloatNDArrayMask implements NameTrait {
             assertTrue(Math.abs(masked.get(i).atan().add(i).getReal() - masked2.get(i).getReal()) / masked2.get(i).getReal() < 1e-6);
             assertTrue(Math.abs(masked.get(i).atan().add(i).getImaginary() - masked2.get(i).getImaginary()) / masked2.get(i).getImaginary() < 1e-6);
         }
-    }
-
-    @Test
-    void testForEachSequential() {
-        AtomicInteger i = new AtomicInteger(0);
-        masked.forEachSequential(value -> assertEquals(masked.get(i.getAndIncrement()), value));
     }
 
     @Test

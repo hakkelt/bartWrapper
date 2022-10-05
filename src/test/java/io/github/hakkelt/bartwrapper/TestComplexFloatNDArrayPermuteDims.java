@@ -9,17 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.hakkelt.ndarrays.ComplexNDArray;
-import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.NDArray;
 import io.github.hakkelt.ndarrays.basic.BasicByteNDArray;
 import io.github.hakkelt.ndarrays.basic.BasicComplexFloatNDArray;
+import io.github.hakkelt.ndarrays.internal.Errors;
 
 class TestComplexFloatNDArrayPermuteDims implements NameTrait {
     BartNDArray array, pArray;
@@ -426,12 +425,6 @@ class TestComplexFloatNDArrayPermuteDims implements NameTrait {
     }
 
     @Test
-    void testForEachSequential() {
-        AtomicInteger i = new AtomicInteger(0);
-        pArray.forEachSequential(value -> assertEquals(pArray.get(i.getAndIncrement()), value));
-    }
-
-    @Test
     void testForEachWithLinearIndices() {
         pArray.forEachWithLinearIndices((value, index) -> assertEquals(pArray.get(index), value));
     }
@@ -597,17 +590,17 @@ class TestComplexFloatNDArrayPermuteDims implements NameTrait {
     void testMaskPermuted() {
         NDArray<Byte> mask = new BasicByteNDArray(pArray.abs().map(value -> value > 20 ? (float)1 : (float)0));
         BartNDArray masked = pArray.mask(mask);
-        masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked.forEach((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
-        array.forEachSequential(value -> assertTrue(value.abs() <= 20));
+        array.forEach(value -> assertTrue(value.abs() <= 20));
     }
 
     @Test
     void testMaskPermutedWithPredicate() {
         BartNDArray masked = pArray.mask(value -> value.abs() > 20);
-        masked.forEachSequential((value) -> assertTrue(value.abs() > 20));
+        masked.forEach((value) -> assertTrue(value.abs() > 20));
         masked.fill(0);
-        array.forEachSequential(value -> assertTrue(value.abs() <= 20));
+        array.forEach(value -> assertTrue(value.abs() <= 20));
     }
 
     @Test
@@ -621,7 +614,7 @@ class TestComplexFloatNDArrayPermuteDims implements NameTrait {
     @Test
     void testMaskPermutedWithPredicateWithCartesianIndices() {
         BartNDArray masked = pArray.maskWithCartesianIndices((value, idx) -> value.abs() > 20 && idx[0] == 0);
-        masked.forEachSequential(value -> assertTrue(value.abs() > 20));
+        masked.forEach(value -> assertTrue(value.abs() > 20));
         masked.fill(0);
         pArray.forEachWithCartesianIndices((value, idx) -> assertTrue(value.abs() <= 20 || idx[0] != 0));
     }
