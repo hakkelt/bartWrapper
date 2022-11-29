@@ -1,6 +1,5 @@
 package io.github.hakkelt.bartwrapper;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -106,22 +105,9 @@ public class BartNDArrayMaskView extends ComplexNDArrayMaskView<Float> implement
     }
 
     @Override
-    public BartNDArray applyOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims) {
-        super.applyOnComplexSlices(func, iterationDims);
-        return this;
-    }
-
-    @Override
     public BartNDArray applyOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims) {
         super.applyOnComplexSlices(func, iterationDims);
         return this;
-    }
-    
-    @Override
-    public BartNDArray mapOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims) {
-        BartNDArray newInstance = copy();
-        newInstance.applyOnComplexSlices(func, iterationDims);
-        return newInstance;
     }
 
     @Override

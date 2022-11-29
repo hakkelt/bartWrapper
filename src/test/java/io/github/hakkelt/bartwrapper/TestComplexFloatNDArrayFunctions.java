@@ -291,7 +291,7 @@ class TestComplexFloatNDArrayFunctions implements NameTrait {
     @Test
     void testcontentToString() {
         String str = array.contentToString();
-        String lineFormat = "%8.5e%+8.5ei\t%8.5e%+8.5ei\t%8.5e%+8.5ei\t%8.5e%+8.5ei\t%8.5e%+8.5ei\t%n";
+        String lineFormat = "%8.3e%+8.3ei\t%8.3e%+8.3ei\t%8.3e%+8.3ei\t%8.3e%+8.3ei\t%8.3e%+8.3ei\t%n";
         String expected = new StringBuilder()
             .append(name() + " NDArray<Complex Float>(4 × 5 × 3)" + System.lineSeparator())
             .append("[:, :, 0] =" + System.lineSeparator())

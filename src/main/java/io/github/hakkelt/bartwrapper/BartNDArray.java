@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -35,6 +34,7 @@ import io.github.hakkelt.ndarrays.internal.ArrayOperations;
 import io.github.hakkelt.ndarrays.internal.CopyFromOperations;
 import io.github.hakkelt.ndarrays.internal.Errors;
 import io.github.hakkelt.ndarrays.internal.NormalizedRange;
+import io.github.hakkelt.ndarrays.internal.SliceOperations;
 import io.github.hakkelt.ndarrays.internal.ViewOperations;
 
 public interface BartNDArray extends ComplexNDArray<Float> {
@@ -145,9 +145,6 @@ public interface BartNDArray extends ComplexNDArray<Float> {
     public BartNDArray applyWithCartesianIndices(BiFunction<Complex, int[], Complex> func);
 
     @Override
-    public BartNDArray applyOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims);
-
-    @Override
     public BartNDArray applyOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims);
 
     @Override
@@ -175,9 +172,6 @@ public interface BartNDArray extends ComplexNDArray<Float> {
         newInstance.applyWithCartesianIndices(func);
         return newInstance;
     }
-
-    @Override
-    public BartNDArray mapOnComplexSlices(BiConsumer<ComplexNDArray<Float>,int[]> func, int... iterationDims);
 
     @Override
     public BartNDArray mapOnComplexSlices(BiFunction<ComplexNDArray<Float>,int[],NDArray<?>> func, int... iterationDims);
@@ -600,7 +594,7 @@ public interface BartNDArray extends ComplexNDArray<Float> {
 
     @Override
     public default BartNDArray sum(int... selectedDims) {
-        return (BartNDArray)new ArrayOperations<Complex,Float>().sum(this, selectedDims);
+        return (BartNDArray) SliceOperations.reduceComplexSlices(this, (slice, idx) -> slice.sum(), selectedDims);
     }
     
     @Override

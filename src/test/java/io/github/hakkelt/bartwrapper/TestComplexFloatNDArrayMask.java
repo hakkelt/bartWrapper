@@ -264,7 +264,7 @@ class TestComplexFloatNDArrayMask implements NameTrait {
     @Test
     void testcontentToString() {
         String str = masked.contentToString();
-        String numberFormat = "%8.5e%+8.5ei\t";
+        String numberFormat = "%8.3e%+8.3ei\t";
         String line = masked.streamLinearIndices()
             .mapToObj(i -> String.format(numberFormat, i * 2 + 1., -i * 2 - 1.))
             .reduce("", (a, b) -> String.join("", a, b));

@@ -302,7 +302,7 @@ class TestComplexFloatNDArrayReshape implements NameTrait {
     @Test
     void testcontentToString() {
         String str = reshaped.contentToString();
-        String lineFormat = "%8.5e%+8.5ei\t%8.5e%+8.5ei\t%8.5e%+8.5ei\t%n";
+        String lineFormat = "%8.3e%+8.3ei\t%8.3e%+8.3ei\t%8.3e%+8.3ei\t%n";
         String expected = new StringBuilder()
             .append(name() + " NDArrayView<Complex Float>(20 × 3)" + System.lineSeparator())
             .append(String.format(lineFormat, 0.0e+00, +0.0e+00, 2.0e+01, -2.0e+01, 4.0e+01, -4.0e+01))
